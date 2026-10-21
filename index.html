@@ -1,0 +1,2156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flow — share anything between your computers</title>
+    <meta
+      name="description"
+      content="Flow moves files, folders, text, links and clipboard between your Mac and Windows PC wirelessly — like AirDrop, for every computer you own."
+    />
+    <meta name="theme-color" content="#fafafa" />
+    <link rel="icon" type="image/png" href="Flow.png" />
+    <style>
+      :root {
+        --blue: #0674ed;
+        --blue-deep: #0058c7;
+        --violet: #7c3aed;
+        --ink: #1d1d1f;
+        --muted: #6e6e73;
+        --line: #e8e8ea;
+        --card: rgba(255, 255, 255, 0.72);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+          "Segoe UI", Roboto, Inter, sans-serif;
+        color: var(--ink);
+        background: #fbfbfd;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        overflow-x: hidden;
+      }
+
+      /* ---------- ambient ---------- */
+      .ambient {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        overflow: hidden;
+      }
+      .ambient i {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        opacity: 0.5;
+      }
+      .ambient i.a {
+        width: 44rem;
+        height: 40rem;
+        left: -10rem;
+        top: -14rem;
+        background: radial-gradient(circle, #0674ed26, transparent 65%);
+        animation: drift-a 26s ease-in-out infinite alternate;
+      }
+      .ambient i.b {
+        width: 40rem;
+        height: 36rem;
+        right: -12rem;
+        top: -6rem;
+        background: radial-gradient(circle, #7c3aed1f, transparent 65%);
+        animation: drift-b 32s ease-in-out infinite alternate;
+      }
+      .ambient i.c {
+        width: 34rem;
+        height: 30rem;
+        left: 32%;
+        bottom: -18rem;
+        background: radial-gradient(circle, #0ea5e914, transparent 65%);
+        animation: drift-c 38s ease-in-out infinite alternate;
+      }
+      @keyframes drift-a {
+        to {
+          transform: translate(7rem, 5rem) scale(1.12);
+        }
+      }
+      @keyframes drift-b {
+        to {
+          transform: translate(-6rem, 7rem) scale(1.08);
+        }
+      }
+      @keyframes drift-c {
+        to {
+          transform: translate(-5rem, -6rem) scale(1.15);
+        }
+      }
+
+      /* ---------- frosted nav ---------- */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        background: rgba(251, 251, 253, 0.72);
+        transition: box-shadow 0.35s var(--ease);
+      }
+      nav.scrolled {
+        box-shadow: 0 1px 0 var(--line);
+      }
+      .nav-in {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: -0.02em;
+      }
+      .brand img {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px #0674ed30;
+      }
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .badge {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        color: var(--blue-deep);
+        background: #0674ed10;
+        border: 1px solid #0674ed22;
+        padding: 5px 12px;
+        border-radius: 999px;
+      }
+      .nav-link {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-link:hover {
+        color: var(--ink);
+      }
+
+      .wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* ---------- reveal ---------- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition:
+          opacity 0.9s var(--ease),
+          transform 0.9s var(--ease);
+        transition-delay: var(--d, 0s);
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* ---------- hero ---------- */
+      .hero {
+        text-align: center;
+        padding: 84px 0 40px;
+      }
+      .eyebrow {
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        background: linear-gradient(100deg, var(--blue), var(--violet));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 18px;
+      }
+      .hero h1 {
+        font-size: clamp(38px, 6.4vw, 64px);
+        letter-spacing: -0.04em;
+        line-height: 1.04;
+        font-weight: 750;
+      }
+      .hero h1 span {
+        background: linear-gradient(105deg, var(--blue) 15%, var(--violet) 85%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .hero p.sub {
+        margin: 22px auto 0;
+        max-width: 580px;
+        font-size: 19px;
+        line-height: 1.55;
+        color: var(--muted);
+      }
+
+      /* ---------- device flow visual ---------- */
+      .stage {
+        position: relative;
+        margin: 56px auto 8px;
+        width: min(680px, 92vw);
+        height: 230px;
+      }
+      .dev {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 148px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        animation: float 7s ease-in-out infinite;
+      }
+      .dev.left {
+        left: 12px;
+      }
+      .dev.right {
+        right: 12px;
+        animation-delay: -3.5s;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(-52%);
+        }
+        50% {
+          transform: translateY(-47%);
+        }
+      }
+      .screen {
+        width: 148px;
+        height: 96px;
+        border-radius: 14px;
+        background: linear-gradient(160deg, #ffffff, #eef0f4);
+        border: 1px solid #ffffff;
+        box-shadow:
+          0 18px 44px -12px rgba(31, 38, 71, 0.22),
+          inset 0 0 0 1px var(--line);
+        display: grid;
+        place-items: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .screen::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(115deg, transparent 30%, #ffffff70 48%, transparent 62%);
+        transform: translateX(-120%);
+        animation: sheen 6s ease-in-out infinite;
+      }
+      @keyframes sheen {
+        0%,
+        55% {
+          transform: translateX(-120%);
+        }
+        80%,
+        100% {
+          transform: translateX(120%);
+        }
+      }
+      .dev .base {
+        width: 92px;
+        height: 5px;
+        border-radius: 4px;
+        background: #d8dae0;
+      }
+      .dev.right .base {
+        width: 60px;
+        height: 26px;
+        border-radius: 6px;
+        margin-top: -6px;
+      }
+      .os-dot {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: #fff;
+        box-shadow:
+          0 6px 16px -4px rgba(31, 38, 71, 0.18),
+          inset 0 0 0 1px var(--line);
+      }
+      .os-dot svg {
+        width: 18px;
+        height: 18px;
+      }
+      .dev .name {
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--muted);
+      }
+
+      /* radar pulse behind each device */
+      .pulse {
+        position: absolute;
+        top: 50%;
+        width: 150px;
+        height: 150px;
+        transform: translateY(-50%);
+        border-radius: 50%;
+        pointer-events: none;
+      }
+      .pulse.left {
+        left: 11px;
+      }
+      .pulse.right {
+        right: 11px;
+      }
+      .pulse::before,
+      .pulse::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 1.5px solid #0674ed;
+        opacity: 0;
+        animation: radar 4.5s ease-out infinite;
+      }
+      .pulse::after {
+        animation-delay: 2.25s;
+      }
+      @keyframes radar {
+        0% {
+          transform: scale(0.55);
+          opacity: 0.5;
+        }
+        100% {
+          transform: scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      /* the beam + flying payloads */
+      .beam {
+        position: absolute;
+        left: 170px;
+        right: 170px;
+        top: 50%;
+        height: 2px;
+        transform: translateY(-50%);
+        background: linear-gradient(90deg, transparent, #0674ed3d 18%, #7c3aed3d 82%, transparent);
+        border-radius: 2px;
+      }
+      .fly {
+        position: absolute;
+        top: 50%;
+        left: 170px;
+        transform: translateY(-50%);
+        animation: travel 3.4s var(--ease) infinite;
+      }
+      .fly.f2 {
+        animation-delay: -1.7s;
+      }
+      .fly.back {
+        animation-name: travel-back;
+        animation-delay: -0.85s;
+      }
+      .fly.back.f4 {
+        animation-delay: -2.55s;
+      }
+      @keyframes travel {
+        0% {
+          left: 170px;
+          opacity: 0;
+          transform: translateY(-50%) scale(0.7);
+        }
+        12% {
+          opacity: 1;
+          transform: translateY(-50%) scale(1);
+        }
+        88% {
+          opacity: 1;
+        }
+        100% {
+          left: calc(100% - 208px);
+          opacity: 0;
+          transform: translateY(-50%) scale(0.7);
+        }
+      }
+      @keyframes travel-back {
+        0% {
+          left: calc(100% - 208px);
+          opacity: 0;
+          transform: translateY(-50%) scale(0.7);
+        }
+        12% {
+          opacity: 1;
+          transform: translateY(-50%) scale(1);
+        }
+        88% {
+          opacity: 1;
+        }
+        100% {
+          left: 170px;
+          opacity: 0;
+          transform: translateY(-50%) scale(0.7);
+        }
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 6px 13px 6px 8px;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: #34363b;
+        box-shadow: 0 8px 22px -8px rgba(31, 38, 71, 0.28);
+        white-space: nowrap;
+      }
+      .chip i {
+        width: 22px;
+        height: 22px;
+        border-radius: 7px;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-style: normal;
+      }
+      .chip.blue i {
+        background: linear-gradient(140deg, #0d7cf5, var(--blue-deep));
+      }
+      .chip.violet i {
+        background: linear-gradient(140deg, #8b5cf6, var(--violet));
+      }
+      .chip.teal i {
+        background: linear-gradient(140deg, #14b8a6, #0d9488);
+      }
+      .chip.amber i {
+        background: linear-gradient(140deg, #f59e0b, #d97706);
+      }
+      .chip svg {
+        width: 12px;
+        height: 12px;
+      }
+      .stage .cap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -6px;
+        text-align: center;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      /* ---------- download ---------- */
+      .dl-zone {
+        margin-top: 44px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+      .dl-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 14px;
+      }
+      .dl-btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 18px;
+        font-weight: 650;
+        padding: 19px 38px;
+        border-radius: 18px;
+        text-decoration: none;
+        overflow: hidden;
+        transition:
+          transform 0.25s var(--ease),
+          box-shadow 0.25s var(--ease);
+      }
+      .dl-btn svg {
+        flex: none;
+      }
+      .dl-btn .meta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 1.3;
+        position: relative;
+      }
+      .dl-btn .meta small {
+        font-size: 12.5px;
+        font-weight: 500;
+        opacity: 0.85;
+        font-variant-numeric: tabular-nums;
+      }
+      #dl {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 15px;
+        background: linear-gradient(180deg, #0d7cf5, var(--blue-deep));
+        color: #fff;
+        font-size: 18px;
+        font-weight: 650;
+        padding: 19px 38px;
+        border-radius: 18px;
+        text-decoration: none;
+        overflow: hidden;
+        box-shadow:
+          0 14px 34px -8px #0674ed66,
+          inset 0 1px 0 #ffffff38;
+        transition:
+          transform 0.25s var(--ease),
+          box-shadow 0.25s var(--ease);
+      }
+      #dl::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(110deg, transparent 30%, #ffffff2e 50%, transparent 68%);
+        transform: translateX(-130%);
+        transition: transform 0.7s var(--ease);
+      }
+      #dl:hover {
+        transform: translateY(-2px) scale(1.015);
+        box-shadow:
+          0 20px 44px -8px #0674ed77,
+          inset 0 1px 0 #ffffff38;
+      }
+      #dl:hover::before {
+        transform: translateX(130%);
+      }
+      #dl:active {
+        transform: translateY(0) scale(0.99);
+      }
+      #dl-alt {
+        background: rgba(255, 255, 255, 0.82);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        color: var(--ink);
+        border: 1px solid var(--line);
+        box-shadow: 0 8px 22px -10px rgba(31, 38, 71, 0.18);
+      }
+      #dl-alt:hover {
+        transform: translateY(-2px) scale(1.015);
+        border-color: #0674ed55;
+        box-shadow: 0 16px 34px -12px rgba(31, 38, 71, 0.26);
+      }
+      #dl-alt:active {
+        transform: translateY(0) scale(0.99);
+      }
+      #dl-alt .meta small {
+        color: var(--muted);
+      }
+      #dl-alt .os-mini {
+        width: 26px;
+        height: 26px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        background: #f0f1f4;
+      }
+      #dl-alt .os-mini svg {
+        width: 15px;
+        height: 15px;
+      }
+      #dl-alt.hidden-alt {
+        display: none;
+      }
+      .dl-note {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .dl-note a {
+        color: var(--blue);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .dl-note a:hover {
+        text-decoration: underline;
+      }
+      .share-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        color: #34363b;
+        font-size: 13.5px;
+        font-weight: 600;
+        padding: 9px 18px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          transform 0.2s var(--ease),
+          box-shadow 0.2s var(--ease);
+      }
+      .share-btn:hover {
+        border-color: #0674ed66;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px -8px rgba(31, 38, 71, 0.25);
+      }
+      .share-btn svg {
+        width: 14px;
+        height: 14px;
+        color: var(--blue);
+      }
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 34px;
+        transform: translate(-50%, 20px);
+        background: #1d1d1f;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 12px 22px;
+        border-radius: 12px;
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.35s var(--ease),
+          transform 0.35s var(--ease);
+        z-index: 95;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+      .dots {
+        display: inline-flex;
+        gap: 3px;
+      }
+      .dots b {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.35;
+        animation: blink 1.2s ease-in-out infinite;
+      }
+      .dots b:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .dots b:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 1;
+        }
+      }
+
+      /* ---------- feature showcase ---------- */
+      .section-title {
+        text-align: center;
+        font-size: clamp(26px, 3.6vw, 38px);
+        font-weight: 720;
+        letter-spacing: -0.03em;
+        padding: 96px 0 12px;
+      }
+      .section-sub {
+        text-align: center;
+        color: var(--muted);
+        font-size: 17px;
+        max-width: 560px;
+        margin: 0 auto 44px;
+        line-height: 1.55;
+      }
+      .showcase {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      @media (max-width: 820px) {
+        .showcase {
+          grid-template-columns: 1fr;
+        }
+      }
+      .card {
+        background: var(--card);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: 26px;
+        transition:
+          transform 0.35s var(--ease),
+          box-shadow 0.35s var(--ease),
+          border-color 0.35s var(--ease);
+      }
+      .card:hover {
+        transform: translateY(-4px);
+        border-color: #0674ed40;
+        box-shadow: 0 22px 44px -18px rgba(31, 38, 71, 0.22);
+      }
+      .card .ico {
+        width: 44px;
+        height: 44px;
+        border-radius: 13px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 16px;
+        color: #fff;
+      }
+      .card:nth-child(6n + 1) .ico {
+        background: linear-gradient(140deg, #0d7cf5, var(--blue-deep));
+      }
+      .card:nth-child(6n + 2) .ico {
+        background: linear-gradient(140deg, #8b5cf6, var(--violet));
+      }
+      .card:nth-child(6n + 3) .ico {
+        background: linear-gradient(140deg, #14b8a6, #0d9488);
+      }
+      .card:nth-child(6n + 4) .ico {
+        background: linear-gradient(140deg, #f59e0b, #d97706);
+      }
+      .card:nth-child(6n + 5) .ico {
+        background: linear-gradient(140deg, #ec4899, #db2777);
+      }
+      .card:nth-child(6n + 6) .ico {
+        background: linear-gradient(140deg, #38bdf8, #0284c7);
+      }
+      .card .ico svg {
+        width: 22px;
+        height: 22px;
+      }
+      .card h3 {
+        font-size: 17px;
+        letter-spacing: -0.015em;
+        margin-bottom: 7px;
+      }
+      .card p {
+        font-size: 14.5px;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+      .card p code {
+        background: #f0f1f4;
+        border-radius: 6px;
+        padding: 1px 6px;
+        font-size: 12.5px;
+      }
+
+      /* ---------- steps ---------- */
+      .steps {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 8px;
+      }
+      @media (max-width: 820px) {
+        .steps {
+          grid-template-columns: 1fr;
+        }
+        .steps::before {
+          display: none;
+        }
+      }
+      .steps::before {
+        content: "";
+        position: absolute;
+        top: 40px;
+        left: 14%;
+        right: 14%;
+        height: 1.5px;
+        background: linear-gradient(90deg, transparent, #0674ed45 25%, #7c3aed45 75%, transparent);
+      }
+      .step {
+        position: relative;
+        text-align: center;
+        padding: 8px 18px 4px;
+      }
+      .step .n {
+        position: relative;
+        z-index: 1;
+        display: inline-grid;
+        place-items: center;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(160deg, #ffffff, #eef1f7);
+        border: 1px solid var(--line);
+        box-shadow: 0 10px 26px -10px rgba(31, 38, 71, 0.22);
+        color: var(--blue-deep);
+        font-weight: 750;
+        font-size: 21px;
+        margin-bottom: 18px;
+      }
+      .step h3 {
+        font-size: 17.5px;
+        letter-spacing: -0.015em;
+        margin-bottom: 8px;
+      }
+      .step p {
+        font-size: 14.5px;
+        line-height: 1.6;
+        color: var(--muted);
+        max-width: 280px;
+        margin: 0 auto;
+      }
+      .step p code {
+        background: #f0f1f4;
+        border-radius: 6px;
+        padding: 1px 6px;
+        font-size: 12.5px;
+      }
+
+      /* ---------- notice ---------- */
+      .notice {
+        background: linear-gradient(160deg, #fffdf5, #fff8e6);
+        border: 1px solid #f0e2b4;
+        border-radius: 22px;
+        padding: 24px 28px;
+        font-size: 14.5px;
+        line-height: 1.65;
+        color: #6b5510;
+        margin: 88px 0 64px;
+      }
+      .notice strong {
+        color: #57430a;
+      }
+      .notice details {
+        margin-top: 10px;
+      }
+      .notice summary {
+        cursor: pointer;
+        font-weight: 650;
+        color: #57430a;
+        list-style: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .notice summary::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-right: 1.8px solid currentColor;
+        border-bottom: 1.8px solid currentColor;
+        transform: rotate(45deg);
+        margin-top: -3px;
+        transition: transform 0.25s var(--ease);
+      }
+      .notice details[open] summary::after {
+        transform: rotate(-135deg);
+        margin-top: 3px;
+      }
+      .notice summary::-webkit-details-marker {
+        display: none;
+      }
+      .notice ul {
+        margin: 10px 0 2px;
+        padding-left: 20px;
+      }
+      .notice li + li {
+        margin-top: 6px;
+      }
+      .notice code {
+        background: #f5ead0;
+        border-radius: 6px;
+        padding: 1px 6px;
+        font-size: 12.5px;
+      }
+
+      /* ---------- footer ---------- */
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 30px 0 48px;
+        font-size: 13.5px;
+        color: var(--muted);
+      }
+      .foot-in {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 24px;
+        justify-content: space-between;
+        align-items: center;
+      }
+      footer a {
+        color: var(--blue);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
+      footer .links {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+      .ver {
+        font-variant-numeric: tabular-nums;
+      }
+      .hidden {
+        display: none !important;
+      }
+
+      @media (max-width: 640px) {
+        .stage {
+          height: 200px;
+        }
+        .dev {
+          width: 112px;
+        }
+        .dev .screen {
+          width: 112px;
+          height: 74px;
+        }
+        .dev .base {
+          width: 68px;
+        }
+        .dev.right .base {
+          width: 46px;
+          height: 20px;
+        }
+        .pulse {
+          width: 116px;
+          height: 116px;
+        }
+        .beam,
+        .fly {
+          left: 128px;
+        }
+        .beam {
+          right: 128px;
+        }
+        @keyframes travel {
+          0% {
+            left: 128px;
+            opacity: 0;
+            transform: translateY(-50%) scale(0.7);
+          }
+          12% {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
+          }
+          88% {
+            opacity: 1;
+          }
+          100% {
+            left: calc(100% - 156px);
+            opacity: 0;
+            transform: translateY(-50%) scale(0.7);
+          }
+        }
+        @keyframes travel-back {
+          0% {
+            left: calc(100% - 156px);
+            opacity: 0;
+            transform: translateY(-50%) scale(0.7);
+          }
+          12% {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
+          }
+          88% {
+            opacity: 1;
+          }
+          100% {
+            left: 128px;
+            opacity: 0;
+            transform: translateY(-50%) scale(0.7);
+          }
+        }
+        .chip {
+          font-size: 11px;
+          padding: 5px 10px 5px 6px;
+        }
+      }
+
+      /* ---------- setup assistant ---------- */
+      #assist-fab {
+        position: fixed;
+        right: 26px;
+        bottom: 26px;
+        z-index: 90;
+        width: 60px;
+        height: 60px;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        background: linear-gradient(140deg, #0d7cf5, var(--violet));
+        box-shadow:
+          0 12px 30px -6px #0674ed77,
+          inset 0 1px 0 #ffffff40;
+        transition:
+          transform 0.3s var(--ease),
+          box-shadow 0.3s var(--ease);
+        animation: fab-pop 0.6s var(--ease) 1.4s backwards;
+      }
+      @keyframes fab-pop {
+        from {
+          transform: scale(0.4);
+          opacity: 0;
+        }
+      }
+      #assist-fab::after {
+        content: "";
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        border: 2px solid #0674ed55;
+        opacity: 0;
+        animation: fab-ping 3.5s ease-out 2s infinite;
+      }
+      @keyframes fab-ping {
+        0% {
+          transform: scale(0.9);
+          opacity: 0.8;
+        }
+        60%,
+        100% {
+          transform: scale(1.45);
+          opacity: 0;
+        }
+      }
+      #assist-fab:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow:
+          0 18px 40px -6px #0674ed88,
+          inset 0 1px 0 #ffffff40;
+      }
+      #assist-fab svg {
+        width: 26px;
+        height: 26px;
+      }
+      #assist-fab .tip {
+        position: absolute;
+        right: 72px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #1d1d1f;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 8px 14px;
+        border-radius: 10px;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s var(--ease);
+      }
+      #assist-fab.peek .tip {
+        opacity: 1;
+      }
+
+      #assist {
+        position: fixed;
+        right: 26px;
+        bottom: 100px;
+        z-index: 89;
+        width: min(390px, calc(100vw - 40px));
+        height: min(560px, calc(100vh - 140px));
+        display: flex;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.86);
+        backdrop-filter: saturate(180%) blur(24px);
+        -webkit-backdrop-filter: saturate(180%) blur(24px);
+        border: 1px solid rgba(230, 231, 234, 0.9);
+        border-radius: 24px;
+        box-shadow: 0 30px 70px -18px rgba(31, 38, 71, 0.35);
+        overflow: hidden;
+        transform-origin: bottom right;
+        transform: scale(0.6) translateY(24px);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          transform 0.4s var(--ease),
+          opacity 0.4s var(--ease);
+      }
+      #assist.open {
+        transform: none;
+        opacity: 1;
+        pointer-events: auto;
+      }
+      #assist .head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.5);
+      }
+      #assist .head .ava {
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        background: linear-gradient(140deg, #0d7cf5, var(--violet));
+        box-shadow: 0 4px 12px -2px #0674ed55;
+      }
+      #assist .head .ava svg {
+        width: 19px;
+        height: 19px;
+      }
+      #assist .head .t {
+        flex: 1;
+        line-height: 1.3;
+      }
+      #assist .head .t b {
+        display: block;
+        font-size: 14.5px;
+        letter-spacing: -0.01em;
+      }
+      #assist .head .t small {
+        font-size: 12px;
+        color: #34a356;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      #assist .head .t small::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #34a356;
+      }
+      #assist .close {
+        border: none;
+        background: #f0f1f4;
+        color: var(--muted);
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 15px;
+        line-height: 1;
+        transition: background 0.2s;
+      }
+      #assist .close:hover {
+        background: #e5e7eb;
+      }
+      #assist .log {
+        flex: 1;
+        overflow-y: auto;
+        padding: 18px 16px 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        scroll-behavior: smooth;
+      }
+      .msg {
+        max-width: 84%;
+        padding: 11px 14px;
+        border-radius: 17px;
+        font-size: 14px;
+        line-height: 1.5;
+        animation: msg-in 0.35s var(--ease) backwards;
+      }
+      @keyframes msg-in {
+        from {
+          opacity: 0;
+          transform: translateY(8px) scale(0.96);
+        }
+      }
+      .msg.bot {
+        align-self: flex-start;
+        background: #f0f1f4;
+        color: var(--ink);
+        border-bottom-left-radius: 6px;
+      }
+      .msg.me {
+        align-self: flex-end;
+        background: linear-gradient(160deg, #0d7cf5, var(--blue-deep));
+        color: #fff;
+        border-bottom-right-radius: 6px;
+      }
+      .msg code {
+        background: #e4e6ea;
+        border-radius: 5px;
+        padding: 1px 5px;
+        font-size: 12.5px;
+      }
+      .msg a {
+        color: var(--blue);
+        font-weight: 650;
+        text-decoration: none;
+      }
+      .msg a:hover {
+        text-decoration: underline;
+      }
+      .msg ul {
+        margin: 6px 0 2px;
+        padding-left: 17px;
+      }
+      .msg li + li {
+        margin-top: 4px;
+      }
+      .msg .stepno {
+        display: inline-grid;
+        place-items: center;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #0674ed;
+        color: #fff;
+        font-size: 11.5px;
+        font-weight: 700;
+        margin-right: 6px;
+        vertical-align: 1px;
+      }
+      .typing {
+        align-self: flex-start;
+        display: inline-flex;
+        gap: 4px;
+        padding: 13px 15px;
+        background: #f0f1f4;
+        border-radius: 17px;
+        border-bottom-left-radius: 6px;
+      }
+      .typing b {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #9da1a9;
+        animation: ty 1.1s ease-in-out infinite;
+      }
+      .typing b:nth-child(2) {
+        animation-delay: 0.18s;
+      }
+      .typing b:nth-child(3) {
+        animation-delay: 0.36s;
+      }
+      @keyframes ty {
+        30% {
+          transform: translateY(-4px);
+        }
+      }
+      #assist .opts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 8px 14px 16px;
+      }
+      .opt {
+        border: 1.5px solid #0674ed55;
+        background: #fff;
+        color: var(--blue-deep);
+        font-size: 13px;
+        font-weight: 650;
+        padding: 8px 15px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.15s var(--ease);
+        animation: msg-in 0.3s var(--ease) backwards;
+      }
+      .opt:hover {
+        background: #0674ed10;
+        border-color: var(--blue);
+        transform: translateY(-1px);
+      }
+      .opt.go {
+        background: linear-gradient(160deg, #0d7cf5, var(--blue-deep));
+        border-color: transparent;
+        color: #fff;
+      }
+      @media (max-width: 640px) {
+        #assist-fab {
+          right: 18px;
+          bottom: 18px;
+          width: 54px;
+          height: 54px;
+        }
+        #assist {
+          right: 12px;
+          bottom: 82px;
+          height: min(520px, calc(100vh - 110px));
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001s !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001s !important;
+        }
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+        .fly {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ambient" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+
+    <nav id="nav">
+      <div class="nav-in">
+        <div class="brand"><img src="Flow.png" alt="Flow logo" />Flow</div>
+        <div class="nav-right">
+          <span class="badge">Engineering alpha</span>
+          <a class="nav-link" href="https://github.com/PlatiniumTermite/flow-downloads/releases">Releases</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="wrap">
+      <section class="hero">
+        <p class="eyebrow reveal in">Meet Flow</p>
+        <h1 class="reveal in" style="--d: 0.08s">Your devices,<br /><span>one continuous flow.</span></h1>
+        <p class="sub reveal in" style="--d: 0.16s">
+          Files, folders, text, links, clipboard and screens — moving wirelessly between
+          your Mac and Windows PC. Like AirDrop, for every computer you own.
+        </p>
+
+        <!-- animated device-to-device transfer visual -->
+        <div class="stage reveal in" style="--d: 0.24s" aria-hidden="true">
+          <div class="pulse left"></div>
+          <div class="pulse right"></div>
+
+          <div class="dev left">
+            <div class="screen">
+              <div class="os-dot">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 6.5c-1-1.6-3-2-4.4-1C5.4 7 5.4 10.6 7 13.7c.9 1.8 1.9 3.4 3 3.4 1 0 1.3-.7 2.6-.7s1.5.7 2.5.7c1.1 0 2.2-1.9 3-3.6-2-1-2.2-3.9-.2-4.9-.9-1.4-2.5-1.6-3.9-.9-.7.4-1.4.4-2 0z" fill="#1d1d1f"/><path d="M14.5 2.5c.2 1.5-.9 2.8-2.4 3-.1-1.5 1-2.8 2.4-3z" fill="#1d1d1f"/></svg>
+              </div>
+            </div>
+            <div class="base"></div>
+            <div class="name">MacBook</div>
+          </div>
+
+          <div class="beam"></div>
+
+          <div class="fly"><span class="chip blue"><i><svg viewBox="0 0 24 24" fill="none"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2"/><path d="M14 3v5h5" stroke="currentColor" stroke-width="2"/></svg></i>report.pdf</span></div>
+          <div class="fly f2"><span class="chip violet"><i><svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2"/></svg></i>project/</span></div>
+          <div class="fly back"><span class="chip teal"><i><svg viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.2 1.1M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></i>link</span></div>
+          <div class="fly back f4"><span class="chip amber"><i><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/><rect x="3" y="3" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2" opacity=".5"/></svg></i>clipboard</span></div>
+
+          <div class="dev right">
+            <div class="screen">
+              <div class="os-dot">
+                <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8.5" height="8.5" rx="1" fill="#0d7cf5"/><rect x="12.5" y="3" width="8.5" height="8.5" rx="1" fill="#0d7cf5" opacity=".8"/><rect x="3" y="12.5" width="8.5" height="8.5" rx="1" fill="#0d7cf5" opacity=".8"/><rect x="12.5" y="12.5" width="8.5" height="8.5" rx="1" fill="#0d7cf5"/></svg>
+              </div>
+            </div>
+            <div class="base"></div>
+            <div class="name">Windows PC</div>
+          </div>
+
+          <p class="cap">Direct device-to-device · nothing touches the cloud</p>
+        </div>
+
+        <div class="dl-zone reveal in" style="--d: 0.32s">
+          <div class="dl-row">
+            <a id="dl" class="dl-btn" href="#downloads" role="button">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 19h16"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <span class="meta">
+                <span id="dl-label">Download Flow</span>
+                <small id="dl-sub">Finding latest release <span class="dots"><b></b><b></b><b></b></span></small>
+              </span>
+            </a>
+            <a id="dl-alt" class="dl-btn hidden-alt" href="#downloads" role="button">
+              <span class="os-mini" id="alt-ico">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="8.5" height="8.5" rx="1" fill="#0d7cf5"/><rect x="12.5" y="3" width="8.5" height="8.5" rx="1" fill="#0d7cf5" opacity=".8"/><rect x="3" y="12.5" width="8.5" height="8.5" rx="1" fill="#0d7cf5" opacity=".8"/><rect x="12.5" y="12.5" width="8.5" height="8.5" rx="1" fill="#0d7cf5"/></svg>
+              </span>
+              <span class="meta">
+                <span id="dl-alt-label">Download for Windows</span>
+                <small id="dl-alt-sub"></small>
+              </span>
+            </a>
+          </div>
+          <p class="dl-note" id="other-note">Detecting your platform…</p>
+          <button class="share-btn" id="share-btn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v13m0-13L8.5 6.5M12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Share this page
+          </button>
+        </div>
+      </section>
+
+      <h2 class="section-title reveal">Everything moves with you.</h2>
+      <p class="section-sub reveal" style="--d: 0.06s">
+        One install on each computer and they behave like one device — no cables,
+        no uploads, no accounts.
+      </p>
+
+      <section class="showcase">
+        <div class="card reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="1.8"/><path d="M14 3v5h5" stroke="currentColor" stroke-width="1.8"/></svg></div>
+          <h3>Any file, any size</h3>
+          <p>Documents, media, archives, code — one transport, integrity-verified, up to your disk quota.</p>
+        </div>
+        <div class="card reveal" style="--d: 0.06s">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.8"/></svg></div>
+          <h3>Whole projects</h3>
+          <p>Drop an entire folder — up to 500 files queued, relative paths preserved, one Accept-all.</p>
+        </div>
+        <div class="card reveal" style="--d: 0.12s">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="3" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.8" opacity=".45"/></svg></div>
+          <h3>Shared clipboard</h3>
+          <p>Copy on the Mac, paste on the PC. Opt-in text clipboard sync while the space is open.</p>
+        </div>
+        <div class="card reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Self-healing connections</h3>
+          <p>Wi-Fi drops mid-transfer? Flow reconnects itself and re-offers interrupted files.</p>
+        </div>
+        <div class="card reveal" style="--d: 0.06s">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12a7 7 0 0 1 14 0M8.5 12a3.5 3.5 0 0 1 7 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="15" r="1.6" fill="currentColor"/></svg></div>
+          <h3>Nearby by name</h3>
+          <p>Your computers discover each other on the same Wi-Fi — tap Connect, tap Allow, done.</p>
+        </div>
+        <div class="card reveal" style="--d: 0.12s">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Private by design</h3>
+          <p>Secrets are never broadcast — the host approves each pairing. Data travels device-to-device.</p>
+        </div>
+      </section>
+
+      <h2 class="section-title reveal">Three steps. That’s it.</h2>
+      <section class="steps">
+        <div class="step reveal">
+          <div class="n">1</div>
+          <h3>Install on both computers</h3>
+          <p>A normal installer on Windows, drag-to-Applications on Mac. No Node.js, no terminal.</p>
+        </div>
+        <div class="step reveal" style="--d: 0.08s">
+          <div class="n">2</div>
+          <h3>They find each other</h3>
+          <p>Same Wi-Fi — discovery is already on, like AirDrop. Your other computer just appears.</p>
+        </div>
+        <div class="step reveal" style="--d: 0.16s">
+          <div class="n">3</div>
+          <h3>Tap, allow, done</h3>
+          <p>Press <code>Connect</code> on one side, <code>Allow</code> on the other. Everything flows from there.</p>
+        </div>
+      </section>
+
+      <section class="notice reveal" id="downloads">
+        <strong>Alpha builds — a heads-up before you install.</strong>
+        These are unsigned test builds, not a trusted-publisher release. Your OS may warn
+        the first time; this is expected for unsigned alpha software.
+        <details>
+          <summary>What to expect</summary>
+          <ul>
+            <li>
+              <strong>Windows:</strong> SmartScreen may show “Windows protected your PC”.
+              Choose <code>More info → Run anyway</code>.
+            </li>
+            <li>
+              <strong>Mac:</strong> if Gatekeeper blocks the first launch, right-click
+              Flow in Applications → <code>Open</code> → <code>Open</code> again.
+              Apple silicon Macs only.
+            </li>
+            <li>
+              Keep both computers on the same trusted Wi-Fi; allow Flow on your private
+              network if the firewall asks.
+            </li>
+          </ul>
+        </details>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- setup assistant -->
+    <button id="assist-fab" aria-label="Open setup assistant" aria-expanded="false">
+      <span class="tip">Need a hand? I'll guide you</span>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M12 3l1.7 4.6L18 9.2l-4.3 1.6L12 15.5l-1.7-4.7L6 9.2l4.3-1.6z"
+          fill="currentColor"
+        />
+        <path
+          d="M18.5 14.5l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z"
+          fill="currentColor"
+          opacity=".75"
+        />
+      </svg>
+    </button>
+    <div id="assist" role="dialog" aria-label="Flow setup assistant">
+      <div class="head">
+        <div class="ava">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M12 3l1.7 4.6L18 9.2l-4.3 1.6L12 15.5l-1.7-4.7L6 9.2l4.3-1.6z"
+              fill="currentColor"
+            />
+            <path
+              d="M18.5 14.5l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z"
+              fill="currentColor"
+              opacity=".75"
+            />
+          </svg>
+        </div>
+        <div class="t"><b>Flow Setup Assistant</b><small>Guided install</small></div>
+        <button class="close" aria-label="Close assistant">×</button>
+      </div>
+      <div class="log" id="assist-log"></div>
+      <div class="opts" id="assist-opts"></div>
+    </div>
+
+    <footer>
+      <div class="foot-in">
+        <span>
+          Flow <span class="ver" id="ver"></span> · Engineering alpha ·
+          <a id="release-link" href="https://github.com/PlatiniumTermite/flow-downloads/releases">Release notes</a>
+        </span>
+        <span class="links">
+          <a id="win-link" href="#downloads" class="hidden">Windows .exe</a>
+          <a id="mac-link" href="#downloads" class="hidden">Mac .dmg</a>
+          <a id="sums-link" href="#downloads" class="hidden">SHA-256</a>
+          <a href="https://github.com/PlatiniumTermite/flow-downloads/releases">All releases</a>
+        </span>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        // frosted nav shadow on scroll
+        var nav = document.getElementById("nav");
+        var onScroll = function () {
+          nav.classList.toggle("scrolled", window.scrollY > 8);
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+
+        // scroll reveal
+        if ("IntersectionObserver" in window) {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                  e.target.classList.add("in");
+                  io.unobserve(e.target);
+                }
+              });
+            },
+            { threshold: 0.12 },
+          );
+          document.querySelectorAll(".reveal:not(.in)").forEach(function (el) {
+            io.observe(el);
+          });
+        } else {
+          document.querySelectorAll(".reveal").forEach(function (el) {
+            el.classList.add("in");
+          });
+        }
+
+        // share this page
+        var toastEl = document.getElementById("toast");
+        var toastTimer = null;
+        function toast(msg) {
+          toastEl.textContent = msg;
+          toastEl.classList.add("show");
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(function () {
+            toastEl.classList.remove("show");
+          }, 2400);
+        }
+        document.getElementById("share-btn").addEventListener("click", function () {
+          var url = location.href.split("#")[0];
+          if (navigator.share) {
+            navigator
+              .share({ title: "Flow — share anything between your computers", url: url })
+              .catch(function () {});
+          } else if (navigator.clipboard) {
+            navigator.clipboard
+              .writeText(url)
+              .then(function () {
+                toast("Link copied — send it to your other computer");
+              })
+              .catch(function () {
+                toast(url);
+              });
+          } else {
+            toast(url);
+          }
+        });
+
+        var REPO = "PlatiniumTermite/flow-downloads";
+        var API = "https://api.github.com/repos/" + REPO + "/releases?per_page=10";
+        var dl = document.getElementById("dl");
+        var dlLabel = document.getElementById("dl-label");
+        var dlSub = document.getElementById("dl-sub");
+        var otherNote = document.getElementById("other-note");
+
+        function platform() {
+          var ua = navigator.userAgent.toLowerCase();
+          var plat =
+            (navigator.userAgentData && navigator.userAgentData.platform) ||
+            navigator.platform ||
+            "";
+          plat = plat.toLowerCase();
+          if (plat.indexOf("win") === 0 || ua.indexOf("windows") !== -1) return "win";
+          if (plat.indexOf("mac") === 0 || ua.indexOf("mac os") !== -1) return "mac";
+          return "other";
+        }
+
+        function fmtBytes(n) {
+          if (!n) return "";
+          var mb = n / 1048576;
+          return Math.round(mb) + " MB";
+        }
+
+        function pick(assets) {
+          var win = null;
+          var mac = null;
+          var sums = null;
+          for (var i = 0; i < assets.length; i++) {
+            var a = assets[i];
+            var n = a.name.toLowerCase();
+            if (n.indexOf("windows") !== -1 && n.slice(-4) === ".exe") win = a;
+            else if (n.indexOf("mac") !== -1 && n.slice(-4) === ".dmg") mac = a;
+            else if (n === "sha256sums.txt") sums = a;
+          }
+          return { win: win, mac: mac, sums: sums };
+        }
+
+        var dlAlt = document.getElementById("dl-alt");
+        var dlAltLabel = document.getElementById("dl-alt-label");
+        var dlAltSub = document.getElementById("dl-alt-sub");
+        var altIco = document.getElementById("alt-ico");
+        var WIN_ICO =
+          '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8.5" height="8.5" rx="1" fill="#0d7cf5"/><rect x="12.5" y="3" width="8.5" height="8.5" rx="1" fill="#0d7cf5" opacity=".8"/><rect x="3" y="12.5" width="8.5" height="8.5" rx="1" fill="#0d7cf5" opacity=".8"/><rect x="12.5" y="12.5" width="8.5" height="8.5" rx="1" fill="#0d7cf5"/></svg>';
+        var MAC_ICO =
+          '<svg viewBox="0 0 24 24" fill="none"><path d="M12 6.5c-1-1.6-3-2-4.4-1C5.4 7 5.4 10.6 7 13.7c.9 1.8 1.9 3.4 3 3.4 1 0 1.3-.7 2.6-.7s1.5.7 2.5.7c1.1 0 2.2-1.9 3-3.6-2-1-2.2-3.9-.2-4.9-.9-1.4-2.5-1.6-3.9-.9-.7.4-1.4.4-2 0z" fill="#1d1d1f"/><path d="M14.5 2.5c.2 1.5-.9 2.8-2.4 3-.1-1.5 1-2.8 2.4-3z" fill="#1d1d1f"/></svg>';
+
+        function apply(release) {
+          var a = pick(release.assets || []);
+          if (!a.win && !a.mac) return false;
+          var os = platform();
+          var primary = os === "win" ? a.win : os === "mac" ? a.mac : a.mac || a.win;
+          var other = primary === a.win ? a.mac : a.win;
+          var name =
+            os === "win" ? "Download for Windows" : os === "mac" ? "Download for Mac" : "Download Flow";
+
+          dl.href = primary.browser_download_url;
+          dlLabel.textContent = name;
+          dlSub.textContent =
+            primary.name + (primary.size ? " · " + fmtBytes(primary.size) : "");
+          window.__flowDl = {
+            url: primary.browser_download_url,
+            name: primary.name,
+            os: os,
+            win: a.win ? a.win.browser_download_url : null,
+            mac: a.mac ? a.mac.browser_download_url : null,
+          };
+          if (other) {
+            var otherIsWin = other === a.win;
+            dlAlt.href = other.browser_download_url;
+            dlAltLabel.textContent = otherIsWin
+              ? "Download for Windows"
+              : "Download for Mac";
+            dlAltSub.textContent =
+              other.name + (other.size ? " · " + fmtBytes(other.size) : "");
+            altIco.innerHTML = otherIsWin ? WIN_ICO : MAC_ICO;
+            dlAlt.classList.remove("hidden-alt");
+          }
+          otherNote.innerHTML =
+            "Apple silicon Mac &amp; Windows x64 · unsigned alpha · " +
+            '<a href="https://github.com/' + REPO + '/releases">release notes</a>';
+
+          document.getElementById("ver").textContent = release.tag_name || "";
+          document.getElementById("release-link").href = release.html_url;
+          if (a.win) {
+            var wl = document.getElementById("win-link");
+            wl.href = a.win.browser_download_url;
+            wl.classList.remove("hidden");
+          }
+          if (a.mac) {
+            var ml = document.getElementById("mac-link");
+            ml.href = a.mac.browser_download_url;
+            ml.classList.remove("hidden");
+          }
+          if (a.sums) {
+            var sl = document.getElementById("sums-link");
+            sl.href = a.sums.browser_download_url;
+            sl.classList.remove("hidden");
+          }
+          return true;
+        }
+
+        fetch(API)
+          .then(function (r) {
+            return r.ok ? r.json() : Promise.reject(r.status);
+          })
+          .then(function (releases) {
+            for (var i = 0; i < releases.length; i++) {
+              if (apply(releases[i])) return;
+            }
+            throw new Error("no matching assets");
+          })
+          .catch(function () {
+            // Fallback: pinned to the 0.3.2 alpha if the API is unreachable.
+            var base =
+              "https://github.com/" + REPO + "/releases/download/v0.3.2-alpha.1/";
+            var os = platform();
+            var winFile = "Flow-0.3.2-alpha.1-Windows-x64-Setup.exe";
+            var macFile = "Flow-0.3.2-alpha.1-Mac-arm64.dmg";
+            var file = os === "win" ? winFile : macFile;
+            dl.href = base + file;
+            dlLabel.textContent = os === "win" ? "Download for Windows" : "Download for Mac";
+            dlSub.textContent = file;
+            var altFile = os === "win" ? macFile : winFile;
+            dlAlt.href = base + altFile;
+            dlAltLabel.textContent =
+              os === "win" ? "Download for Mac" : "Download for Windows";
+            dlAltSub.textContent = altFile;
+            altIco.innerHTML = os === "win" ? MAC_ICO : WIN_ICO;
+            dlAlt.classList.remove("hidden-alt");
+            window.__flowDl = {
+              url: base + file,
+              name: file,
+              os: os,
+              win: base + winFile,
+              mac: base + macFile,
+            };
+            otherNote.innerHTML =
+              '<a href="https://github.com/' + REPO + '/releases">See all downloads</a>';
+            document.getElementById("ver").textContent = "v0.3.2-alpha.1";
+          });
+      })();
+    </script>
+
+    <script>
+      (function () {
+        var fab = document.getElementById("assist-fab");
+        var panel = document.getElementById("assist");
+        var log = document.getElementById("assist-log");
+        var opts = document.getElementById("assist-opts");
+        var opened = false;
+
+        function os() {
+          return (window.__flowDl && window.__flowDl.os) || "other";
+        }
+        function dlUrl() {
+          return (window.__flowDl && window.__flowDl.url) || "#downloads";
+        }
+        function dlName() {
+          return (window.__flowDl && window.__flowDl.name) || "the Flow installer";
+        }
+        function otherUrl() {
+          var d = window.__flowDl || {};
+          return os() === "win" ? d.mac : d.win;
+        }
+
+        var SUMS =
+          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.3.2-alpha.1/SHA256SUMS.txt";
+
+        function scrollBottom() {
+          log.scrollTop = log.scrollHeight;
+        }
+        function typing(ms) {
+          var t = document.createElement("div");
+          t.className = "typing";
+          t.innerHTML = "<b></b><b></b><b></b>";
+          log.appendChild(t);
+          scrollBottom();
+          return new Promise(function (r) {
+            setTimeout(function () {
+              t.remove();
+              r();
+            }, ms);
+          });
+        }
+        function say(html, ms) {
+          return typing(ms || 700).then(function () {
+            var m = document.createElement("div");
+            m.className = "msg bot";
+            m.innerHTML = html;
+            log.appendChild(m);
+            scrollBottom();
+          });
+        }
+        function sayAll(list, i) {
+          i = i || 0;
+          if (i >= list.length) return Promise.resolve();
+          return say(list[i], 550 + Math.min(list[i].length * 6, 900)).then(function () {
+            return sayAll(list, i + 1);
+          });
+        }
+        function me(label) {
+          var m = document.createElement("div");
+          m.className = "msg me";
+          m.textContent = label;
+          log.appendChild(m);
+          scrollBottom();
+        }
+        function options(list) {
+          opts.innerHTML = "";
+          list.forEach(function (o, i) {
+            var b = document.createElement("button");
+            b.className = "opt" + (o.primary ? " go" : "");
+            b.style.animationDelay = i * 0.07 + "s";
+            b.textContent = o.label;
+            b.onclick = function () {
+              me(o.label);
+              opts.innerHTML = "";
+              o.go();
+            };
+            opts.appendChild(b);
+          });
+        }
+        function step(n, text) {
+          return '<span class="stepno">' + n + "</span>" + text;
+        }
+
+        // ---------- conversation states ----------
+        function greet() {
+          var osName =
+            os() === "win" ? "Windows" : os() === "mac" ? "a Mac" : "this device";
+          sayAll([
+            "Hi! I'm the Flow setup assistant — I'll walk you through installing and pairing, step by step.",
+            "You appear to be on <b>" + osName + "</b>. Whenever you're ready, we'll do this together.",
+          ]).then(function () {
+            options([
+              { label: "Walk me through it", primary: true, go: stepDownload },
+              { label: "Just the download link", go: justLink },
+              { label: "Is this safe?", go: safety },
+            ]);
+          });
+        }
+
+        function justLink() {
+          say(
+            'Here you go — one click: <a href="' +
+              dlUrl() +
+              '"><b>' +
+              dlName() +
+              "</b></a>. Say the word if you'd like the guided version after all.",
+          ).then(function () {
+            options([
+              { label: "Guide me anyway", primary: true, go: stepDownload },
+              { label: "I'm good, thanks", go: doneQuick },
+            ]);
+          });
+        }
+
+        function safety() {
+          sayAll([
+            "Fair question — here's the honest version:",
+            "<ul><li>Download only from this page or <code>github.com/PlatiniumTermite/flow-downloads</code>.</li>" +
+              "<li>These are <b>unsigned alpha builds</b>, so Windows SmartScreen and macOS Gatekeeper may warn once — that's normal, and I'll show you exactly what to click.</li>" +
+              "<li>Never disable your firewall or security features for Flow. You don't need to.</li>" +
+              "<li>Pairing always needs someone to click <code>Allow</code> — nothing joins silently.</li></ul>",
+            'If you like extra certainty, compare the file hash with <a href="' +
+              SUMS +
+              '">SHA256SUMS.txt</a> on the release page.',
+          ]).then(function () {
+            options([
+              { label: "Okay, walk me through it", primary: true, go: stepDownload },
+              { label: "Just the download link", go: justLink },
+            ]);
+          });
+        }
+
+        function stepDownload() {
+          sayAll([
+            step(1, "Download the installer"),
+            'Press this: <a href="' +
+              dlUrl() +
+              '"><b>' +
+              dlName() +
+              "</b></a>. Your browser saves it to the usual Downloads spot — I'll wait.",
+          ]).then(function () {
+            options([
+              { label: "Downloaded ✓", primary: true, go: stepOpen },
+              { label: "It's not downloading", go: helpDownload },
+            ]);
+          });
+        }
+
+        function helpDownload() {
+          sayAll([
+            "No problem — a few things that usually fix it:",
+            "<ul><li>Check the browser's download bar or press <code>" +
+              (os() === "mac" ? "⇧⌘J" : "Ctrl+J") +
+              "</code> to open Downloads.</li>" +
+              '<li>If it was blocked, look for a “Keep” option — some browsers flag unsigned installers.</li>' +
+              '<li>Or grab it directly from the <a href="https://github.com/PlatiniumTermite/flow-downloads/releases/latest">release page</a>.</li></ul>',
+          ]).then(function () {
+            options([
+              { label: "Got it now ✓", primary: true, go: stepOpen },
+              { label: "Back to the link", go: stepDownload },
+            ]);
+          });
+        }
+
+        function stepOpen() {
+          var msgs =
+            os() === "win"
+              ? [
+                  step(2, "Run the installer"),
+                  "Open <code>" +
+                    dlName() +
+                    "</code> from your Downloads folder (double-click it). The installer does the rest — Start-menu and desktop shortcuts included, nothing else to run.",
+                ]
+              : [
+                  step(2, "Install the app"),
+                  "Open <code>" +
+                    dlName() +
+                    "</code> from Downloads, then <b>drag Flow onto the Applications folder</b> in the window that opens. Then eject the disk image — that's it.",
+                ];
+          sayAll(msgs).then(function () {
+            options([
+              { label: "Done ✓", primary: true, go: stepLaunch },
+              { label: "A warning popped up", go: stepWarn },
+            ]);
+          });
+        }
+
+        function stepWarn() {
+          var msgs =
+            os() === "win"
+              ? [
+                  "That blue SmartScreen box is Windows being careful with unsigned apps — expected, not an error.",
+                  "Click <code>More info</code>, then <code>Run anyway</code>. (If your PC is managed by a workplace, they may need to approve it instead.)",
+                ]
+              : [
+                  "Gatekeeper does that for apps downloaded outside the App Store — expected for an unsigned alpha.",
+                  "Don't double-click past it. Instead: open <b>Applications</b>, <b>right-click Flow → Open → Open</b> once. From then on it launches normally. Never use any command that disables Gatekeeper itself.",
+                ];
+          sayAll(msgs).then(function () {
+            options([
+              { label: "Flow is installed ✓", primary: true, go: stepLaunch },
+              { label: "Still stuck", go: helpWarn },
+            ]);
+          });
+        }
+
+        function helpWarn() {
+          sayAll([
+            "Let's slow down. Tell your computer this:",
+            os() === "win"
+              ? "In the SmartScreen dialog, the <code>More info</code> link is small grey text under the warning — click it and a <code>Run anyway</code> button appears at the bottom right."
+              : "If right-click → Open still refuses, open <code>System Settings → Privacy &amp; Security</code>, scroll down — a line about Flow appears with an <code>Open Anyway</code> button. Click it once.",
+            "And a safety promise: you never need to turn off antivirus, SmartScreen or Gatekeeper for Flow. If a guide tells you to, it's not ours.",
+          ]).then(function () {
+            options([
+              { label: "Sorted ✓", primary: true, go: stepLaunch },
+              { label: "Back to download", go: stepDownload },
+            ]);
+          });
+        }
+
+        function stepLaunch() {
+          sayAll([
+            step(3, "Open Flow"),
+            os() === "win"
+              ? "Launch <b>Flow</b> from Start (or the new desktop shortcut). If Windows Firewall asks, allow it on <b>private networks</b> — that's how it finds your other computer."
+              : "Launch <b>Flow</b> from Applications. If macOS asks about <b>Local Network</b> access, allow it — that's how it finds your other computer.",
+          ]).then(function () {
+            options([
+              { label: "Flow is open ✓", primary: true, go: stepBoth },
+              { label: "It won't open", go: helpLaunch },
+            ]);
+          });
+        }
+
+        function helpLaunch() {
+          say(
+            "Try this: quit any older Flow copy from its tray or menu-bar icon first, then relaunch. If it still fails, grab the newest build again from the releases page — and tell the developer what you saw.",
+          ).then(function () {
+            options([
+              { label: "It's open now ✓", primary: true, go: stepBoth },
+              { label: "Restart guide", go: greet },
+            ]);
+          });
+        }
+
+        function stepBoth() {
+          sayAll([
+            step(4, "Repeat on your other computer"),
+            os() === "win"
+              ? 'Now on your <b>Mac</b>: open this same page there (<code>platiniumtermite.github.io</code>)' +
+                (otherUrl() ? ' or <a href="' + otherUrl() + '">download the Mac version</a> directly' : "") +
+                ". Same steps, roughly 30 seconds."
+              : 'Now on your <b>Windows PC</b>: open this same page there (<code>platiniumtermite.github.io</code>)' +
+                (otherUrl() ? ' or <a href="' + otherUrl() + '">download the Windows version</a> directly' : "") +
+                ". Same steps, roughly 30 seconds.",
+            "Both machines need to be on the <b>same Wi-Fi</b> for the magic to work.",
+          ]).then(function () {
+            options([
+              { label: "Flow is on both ✓", primary: true, go: stepNearby },
+              { label: "Only one for now", go: onlyOne },
+            ]);
+          });
+        }
+
+        function onlyOne() {
+          say(
+            "Totally fine — Flow is also handy solo. When you get the other computer, just say <b>walk me through pairing</b> next time you open me. Ready when you are for the last stretch?",
+          ).then(function () {
+            options([
+              { label: "Continue to pairing", primary: true, go: stepNearby },
+              { label: "Finish for now", go: done },
+            ]);
+          });
+        }
+
+        function stepNearby() {
+          sayAll([
+            step(5, "Let them see each other"),
+            "Nothing to configure — nearby discovery is already on in Flow, like AirDrop. Both computers just need to be running Flow on the same Wi-Fi.",
+          ]).then(function () {
+            options([
+              { label: "Both running ✓", primary: true, go: stepPair },
+              { label: "I turned discovery off", go: helpNearby },
+            ]);
+          });
+        }
+
+        function helpNearby() {
+          say(
+            "No problem — it's in Flow's <code>Settings</code>, the <code>Find nearby Flow computers</code> switch. Turn it back on; it stays on until you choose otherwise, and your invitation secret is never broadcast either way.",
+          ).then(function () {
+            options([
+              { label: "Found it ✓", primary: true, go: stepPair },
+              { label: "Skip — I'll pair manually", go: stepPairManual },
+            ]);
+          });
+        }
+
+        function stepPair() {
+          sayAll([
+            step(6, "Pair — the AirDrop moment"),
+            "On either computer: <code>Connect a device</code> → under <code>Nearby computers</code>, pick the other machine → <code>Connect</code>.",
+            "The other computer pops an <code>Allow / Decline</code> prompt — press <code>Allow</code> and you're in the same space. Nothing to type or scan.",
+          ]).then(function () {
+            options([
+              { label: "Connected!", primary: true, go: done },
+              { label: "I don't see the computer", go: helpPair },
+            ]);
+          });
+        }
+
+        function stepPairManual() {
+          say(
+            "Manual pairing it is: on one computer <code>Connect a device → Copy invitation</code>; on the other, <code>Settings → Join a space</code>, paste the whole invitation, <code>Join space</code>. Works every time.",
+          ).then(function () {
+            options([
+              { label: "Connected!", primary: true, go: done },
+              { label: "Show nearby steps again", go: stepNearby },
+            ]);
+          });
+        }
+
+        function helpPair() {
+          sayAll([
+            "Discovery checklist — these cover almost every case:",
+            "<ul><li>Same Wi-Fi on both (guest networks often isolate devices — use the private one).</li>" +
+              "<li><code>Find nearby Flow computers</code> is on for <b>both</b>.</li>" +
+              "<li>Allow Flow on private networks if the firewall asks.</li>" +
+              "<li>Give it ~30 seconds — discovery refreshes periodically.</li></ul>",
+            "Still nothing? The invitation fallback never fails.",
+          ]).then(function () {
+            options([
+              { label: "Now I see it ✓", primary: true, go: stepPair },
+              { label: "Pair manually instead", go: stepPairManual },
+            ]);
+          });
+        }
+
+        function doneQuick() {
+          say("Enjoy! Open me again any time if a warning or a step trips you up.").then(
+            function () {
+              options([{ label: "Close", go: closePanel }]);
+            },
+          );
+        }
+
+        function done() {
+          sayAll([
+            "You're flowing! Drag a file onto your other computer's name, or copy some text — watch it arrive.",
+            "Safety recap, quickly: download only from this page, never turn off security features, and every pairing needs a human <code>Allow</code>. You're all set.",
+          ]).then(function () {
+            options([
+              { label: "Restart guide", go: greet },
+              { label: "Close", primary: true, go: closePanel },
+            ]);
+          });
+        }
+
+        // ---------- wire up ----------
+        function openPanel() {
+          panel.classList.add("open");
+          fab.classList.remove("peek");
+          fab.setAttribute("aria-expanded", "true");
+          if (!opened) {
+            opened = true;
+            setTimeout(greet, 350);
+          }
+        }
+        function closePanel() {
+          panel.classList.remove("open");
+          fab.setAttribute("aria-expanded", "false");
+        }
+        fab.addEventListener("click", function () {
+          panel.classList.contains("open") ? closePanel() : openPanel();
+        });
+        panel.querySelector(".close").addEventListener("click", closePanel);
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") closePanel();
+        });
+
+        // invite attention once, politely
+        setTimeout(function () {
+          if (!opened) {
+            fab.classList.add("peek");
+            setTimeout(function () {
+              fab.classList.remove("peek");
+            }, 4500);
+          }
+        }, 3200);
+      })();
+    </script>
+  </body>
+</html>
