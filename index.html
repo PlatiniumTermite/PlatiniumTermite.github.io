@@ -1797,7 +1797,7 @@
             <li>
               <strong>Mac:</strong> if Gatekeeper blocks the first launch,
               right-click Flow in Applications → <code>Open</code> →
-              <code>Open</code> again. Apple silicon Macs only.
+              <code>Open</code> again. Applies to Apple silicon and Intel.
             </li>
             <li>
               Keep both computers on the same trusted Wi-Fi; allow Flow on your
@@ -1869,6 +1869,7 @@
           <a id="mac-intel-link" href="#downloads" class="hidden"
             >Intel Mac .dmg</a
           >
+          <a id="apk-link" href="#downloads" class="hidden">Android .apk</a>
           <a id="sums-link" href="#downloads" class="hidden">SHA-256</a>
           <a href="https://github.com/PlatiniumTermite/flow-downloads/releases"
             >All releases</a
@@ -2093,6 +2094,11 @@
             il.href = a.macIntel.browser_download_url;
             il.classList.remove("hidden");
           }
+          if (a.apk) {
+            var al = document.getElementById("apk-link");
+            al.href = a.apk.browser_download_url;
+            al.classList.remove("hidden");
+          }
           if (a.sums) {
             var sl = document.getElementById("sums-link");
             sl.href = a.sums.browser_download_url;
@@ -2160,6 +2166,20 @@
               REPO +
               '/releases">See all downloads</a>';
             document.getElementById("ver").textContent = "v0.6.4";
+            var foot = {
+              "win-link": base + winFile,
+              "mac-link": base + macFile,
+              "mac-intel-link": base + "Flow-0.6.4-Mac-x64.dmg",
+              "apk-link": base + apkFile,
+              "sums-link": base + "SHA256SUMS.txt",
+            };
+            for (var fid in foot) {
+              var el = document.getElementById(fid);
+              if (el) {
+                el.href = foot[fid];
+                el.classList.remove("hidden");
+              }
+            }
           });
       })();
     </script>
