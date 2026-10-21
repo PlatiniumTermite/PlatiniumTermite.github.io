@@ -1546,6 +1546,7 @@
         <span class="links">
           <a id="win-link" href="#downloads" class="hidden">Windows .exe</a>
           <a id="mac-link" href="#downloads" class="hidden">Mac .dmg</a>
+          <a id="mac-intel-link" href="#downloads" class="hidden">Intel Mac .dmg</a>
           <a id="sums-link" href="#downloads" class="hidden">SHA-256</a>
           <a href="https://github.com/PlatiniumTermite/flow-downloads/releases">All releases</a>
         </span>
@@ -1643,15 +1644,17 @@
         function pick(assets) {
           var win = null;
           var mac = null;
+          var macIntel = null;
           var sums = null;
           for (var i = 0; i < assets.length; i++) {
             var a = assets[i];
             var n = a.name.toLowerCase();
             if (n.indexOf("windows") !== -1 && n.slice(-4) === ".exe") win = a;
+            else if (n.indexOf("mac-x64") !== -1 && n.slice(-4) === ".dmg") macIntel = a;
             else if (n.indexOf("mac") !== -1 && n.slice(-4) === ".dmg") mac = a;
             else if (n === "sha256sums.txt") sums = a;
           }
-          return { win: win, mac: mac, sums: sums };
+          return { win: win, mac: mac, macIntel: macIntel, sums: sums };
         }
 
         var dlAlt = document.getElementById("dl-alt");
@@ -1682,6 +1685,7 @@
             os: os,
             win: a.win ? a.win.browser_download_url : null,
             mac: a.mac ? a.mac.browser_download_url : null,
+            macIntel: a.macIntel ? a.macIntel.browser_download_url : null,
           };
           if (other) {
             var otherIsWin = other === a.win;
@@ -1695,7 +1699,7 @@
             dlAlt.classList.remove("hidden-alt");
           }
           otherNote.innerHTML =
-            "Apple silicon Mac &amp; Windows x64 · unsigned alpha · " +
+            "Apple silicon &amp; Intel Mac · Windows x64 · unsigned alpha · " +
             '<a href="https://github.com/' + REPO + '/releases">release notes</a>';
 
           document.getElementById("ver").textContent = release.tag_name || "";
@@ -1709,6 +1713,11 @@
             var ml = document.getElementById("mac-link");
             ml.href = a.mac.browser_download_url;
             ml.classList.remove("hidden");
+          }
+          if (a.macIntel) {
+            var il = document.getElementById("mac-intel-link");
+            il.href = a.macIntel.browser_download_url;
+            il.classList.remove("hidden");
           }
           if (a.sums) {
             var sl = document.getElementById("sums-link");
@@ -1752,6 +1761,7 @@
               os: os,
               win: base + winFile,
               mac: base + macFile,
+              macIntel: base + "Flow-0.4.0-alpha.1-Mac-x64.dmg",
             };
             otherNote.innerHTML =
               '<a href="https://github.com/' + REPO + '/releases">See all downloads</a>';
@@ -1937,7 +1947,8 @@
                   step(2, "Install the app"),
                   "Open <code>" +
                     dlName() +
-                    "</code> from Downloads, then <b>drag Flow onto the Applications folder</b> in the window that opens. Then eject the disk image — that's it.",
+                    "</code> from Downloads, then <b>drag Flow onto the Applications folder</b> in the window that opens. Then eject the disk image — that's it. " +
+                    "On an <b>Intel Mac</b>, use the “Intel Mac .dmg” link under the buttons instead.",
                 ];
           sayAll(msgs).then(function () {
             options([
