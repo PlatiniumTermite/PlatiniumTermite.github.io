@@ -1729,12 +1729,12 @@
             throw new Error("no matching assets");
           })
           .catch(function () {
-            // Fallback: pinned to the 0.3.2 alpha if the API is unreachable.
+            // Fallback: pinned to the 0.4.0 alpha if the API is unreachable.
             var base =
-              "https://github.com/" + REPO + "/releases/download/v0.3.2-alpha.1/";
+              "https://github.com/" + REPO + "/releases/download/v0.4.0-alpha.1/";
             var os = platform();
-            var winFile = "Flow-0.3.2-alpha.1-Windows-x64-Setup.exe";
-            var macFile = "Flow-0.3.2-alpha.1-Mac-arm64.dmg";
+            var winFile = "Flow-0.4.0-alpha.1-Windows-x64-Setup.exe";
+            var macFile = "Flow-0.4.0-alpha.1-Mac-arm64.dmg";
             var file = os === "win" ? winFile : macFile;
             dl.href = base + file;
             dlLabel.textContent = os === "win" ? "Download for Windows" : "Download for Mac";
@@ -1755,7 +1755,7 @@
             };
             otherNote.innerHTML =
               '<a href="https://github.com/' + REPO + '/releases">See all downloads</a>';
-            document.getElementById("ver").textContent = "v0.3.2-alpha.1";
+            document.getElementById("ver").textContent = "v0.4.0-alpha.1";
           });
       })();
     </script>
@@ -1783,7 +1783,7 @@
         }
 
         var SUMS =
-          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.3.2-alpha.1/SHA256SUMS.txt";
+          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.4.0-alpha.1/SHA256SUMS.txt";
 
         function scrollBottom() {
           log.scrollTop = log.scrollHeight;
