@@ -1354,7 +1354,7 @@
       <div class="nav-in">
         <div class="brand"><img src="Flow.png" alt="Flow logo" />Flow</div>
         <div class="nav-right">
-          <span class="badge">Engineering alpha</span>
+          <span class="badge">v0.4.0 — free download</span>
           <a
             class="nav-link"
             href="https://github.com/PlatiniumTermite/flow-downloads/releases"
@@ -1784,9 +1784,9 @@
       </section>
 
       <section class="notice reveal" id="downloads">
-        <strong>Alpha builds — a heads-up before you install.</strong>
-        These are unsigned test builds, not a trusted-publisher release. Your OS
-        may warn the first time; this is expected for unsigned alpha software.
+        <strong>Before you install — one heads-up.</strong>
+        The builds are not code-signed yet, so your OS may warn the first time —
+        that is expected for an early release and takes one extra click.
         <details>
           <summary>What to expect</summary>
           <ul>
@@ -1856,7 +1856,7 @@
     <footer>
       <div class="foot-in">
         <span>
-          Flow <span class="ver" id="ver"></span> · Engineering alpha ·
+          Flow <span class="ver" id="ver"></span> · Free and open ·
           <a
             id="release-link"
             href="https://github.com/PlatiniumTermite/flow-downloads/releases"
@@ -2071,7 +2071,7 @@
             dlAlt.classList.remove("hidden-alt");
           }
           otherNote.innerHTML =
-            "Android · Apple silicon &amp; Intel Mac · Windows x64 · unsigned alpha · " +
+            "Android · Apple silicon &amp; Intel Mac · Windows x64 · unsigned builds · " +
             '<a href="https://github.com/' +
             REPO +
             '/releases">release notes</a>';
@@ -2112,15 +2112,15 @@
             throw new Error("no matching assets");
           })
           .catch(function () {
-            // Fallback: pinned to the 0.4.0 alpha if the API is unreachable.
+            // Fallback: pinned to the 0.4.0 release if the API is unreachable.
             var base =
               "https://github.com/" +
               REPO +
-              "/releases/download/v0.4.0-alpha.1/";
+              "/releases/download/v0.4.0/";
             var os = platform();
-            var winFile = "Flow-0.4.0-alpha.1-Windows-x64-Setup.exe";
-            var macFile = "Flow-0.4.0-alpha.1-Mac-arm64.dmg";
-            var apkFile = "Flow-0.4.0-alpha.1-Android.apk";
+            var winFile = "Flow-0.4.0-Windows-x64-Setup.exe";
+            var macFile = "Flow-0.4.0-Mac-arm64.dmg";
+            var apkFile = "Flow-0.4.0-Android.apk";
             var file =
               os === "win" ? winFile : os === "android" ? apkFile : macFile;
             dl.href = base + file;
@@ -2144,7 +2144,7 @@
               os: os,
               win: base + winFile,
               mac: base + macFile,
-              macIntel: base + "Flow-0.4.0-alpha.1-Mac-x64.dmg",
+              macIntel: base + "Flow-0.4.0-Mac-x64.dmg",
               apk: base + apkFile,
             };
             if (os === "ios") {
@@ -2159,7 +2159,7 @@
               '<a href="https://github.com/' +
               REPO +
               '/releases">See all downloads</a>';
-            document.getElementById("ver").textContent = "v0.4.0-alpha.1";
+            document.getElementById("ver").textContent = "v0.4.0";
           });
       })();
     </script>
@@ -2189,7 +2189,7 @@
         }
 
         var SUMS =
-          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.4.0-alpha.1/SHA256SUMS.txt";
+          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.4.0/SHA256SUMS.txt";
 
         function scrollBottom() {
           log.scrollTop = log.scrollHeight;
@@ -2297,7 +2297,7 @@
           sayAll([
             "Fair question — here's the honest version:",
             "<ul><li>Download only from this page or <code>github.com/PlatiniumTermite/flow-downloads</code>.</li>" +
-              "<li>These are <b>unsigned alpha builds</b>, so Windows SmartScreen and macOS Gatekeeper may warn once — that's normal, and I'll show you exactly what to click.</li>" +
+              "<li>These are <b>unsigned builds</b>, so Windows SmartScreen and macOS Gatekeeper may warn once — that's normal, and I'll show you exactly what to click.</li>" +
               "<li>Never disable your firewall or security features for Flow. You don't need to.</li>" +
               "<li>Pairing always needs someone to click <code>Allow</code> — nothing joins silently.</li></ul>",
             'If you like extra certainty, compare the file hash with <a href="' +
@@ -2411,7 +2411,7 @@
           var msgs =
             os() === "android"
               ? [
-                  "That is Play Protect being careful with apps installed outside the Play Store — expected for a direct-download alpha.",
+                  "That is Play Protect being careful with apps installed outside the Play Store — expected for a direct-download release.",
                   "Tap <b>More details</b> → <b>Install anyway</b>. The APK is signed by us; only ever install it from this page.",
                 ]
               : os() === "win"
@@ -2420,7 +2420,7 @@
                     "Click <code>More info</code>, then <code>Run anyway</code>. (If your PC is managed by a workplace, they may need to approve it instead.)",
                   ]
                 : [
-                    "Gatekeeper does that for apps downloaded outside the App Store — expected for an unsigned alpha.",
+                    "Gatekeeper does that for apps downloaded outside the App Store — expected for an unsigned build.",
                     "Don't double-click past it. Instead: open <b>Applications</b>, <b>right-click Flow → Open → Open</b> once. From then on it launches normally. Never use any command that disables Gatekeeper itself.",
                   ];
           sayAll(msgs).then(function () {
