@@ -848,6 +848,105 @@
         font-size: 12.5px;
       }
 
+      /* ---------- install guide ---------- */
+      .install {
+        margin-top: 80px;
+      }
+      .install > h2 {
+        font-size: clamp(26px, 4vw, 36px);
+        letter-spacing: -0.025em;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .install > p {
+        text-align: center;
+        color: var(--muted);
+        font-size: 15px;
+        margin: 0 auto 30px;
+        max-width: 560px;
+      }
+      .os {
+        background: var(--card);
+        backdrop-filter: blur(14px);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        margin-bottom: 14px;
+        overflow: hidden;
+      }
+      .os > summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 18px 22px;
+        font-weight: 700;
+        font-size: 16.5px;
+        letter-spacing: -0.01em;
+      }
+      .os > summary::-webkit-details-marker {
+        display: none;
+      }
+      .os > summary .chev {
+        margin-left: auto;
+        width: 9px;
+        height: 9px;
+        border-right: 2px solid var(--muted);
+        border-bottom: 2px solid var(--muted);
+        transform: rotate(45deg);
+        transition: transform 0.25s var(--ease);
+      }
+      .os[open] > summary .chev {
+        transform: rotate(-135deg);
+      }
+      .os > summary .tag {
+        font-weight: 600;
+        font-size: 12px;
+        color: var(--blue-deep);
+        background: #eaf3ff;
+        border-radius: 999px;
+        padding: 3px 10px;
+      }
+      .os .os-body {
+        padding: 0 26px 24px;
+        font-size: 14.5px;
+        line-height: 1.65;
+        color: var(--muted);
+      }
+      .os .os-body ol {
+        padding-left: 20px;
+        margin: 0 0 14px;
+      }
+      .os .os-body ol li {
+        margin-top: 7px;
+      }
+      .os .os-body code {
+        background: #f0f1f4;
+        border-radius: 6px;
+        padding: 1px 6px;
+        font-size: 12.5px;
+      }
+      .os .fix {
+        background: #fffdf5;
+        border: 1px solid #f0e2b4;
+        border-radius: 14px;
+        padding: 14px 16px;
+        font-size: 13.5px;
+      }
+      .os .fix b {
+        color: #57430a;
+      }
+      .os .fix ul {
+        margin: 8px 0 0;
+        padding-left: 18px;
+      }
+      .os .fix li + li {
+        margin-top: 6px;
+      }
+      .os .fix code {
+        background: #f5ead0;
+      }
+
       /* ---------- notice ---------- */
       .notice {
         background: linear-gradient(160deg, #fffdf5, #fff8e6);
@@ -1355,6 +1454,7 @@
         <div class="brand"><img src="Flow.png" alt="Flow logo" />Flow</div>
         <div class="nav-right">
           <span class="badge">v0.6.5 — free download</span>
+          <a class="nav-link" href="#install">Install guide</a>
           <a
             class="nav-link"
             href="https://github.com/PlatiniumTermite/flow-downloads/releases"
@@ -1804,6 +1904,129 @@
               private network if the firewall asks.
             </li>
           </ul>
+        </details>
+      </section>
+
+      <section class="install reveal" id="install">
+        <h2>Install guide</h2>
+        <p>
+          Pick your platform — every step and every warning you might see,
+          and exactly what to click.
+        </p>
+
+        <details class="os">
+          <summary>
+            Windows <span class="tag">Setup.exe · x64</span>
+            <span class="chev"></span>
+          </summary>
+          <div class="os-body">
+            <ol>
+              <li>Download <code>Flow-…-Windows-x64-Setup.exe</code>.</li>
+              <li>Quit the old Flow from its system-tray menu first.</li>
+              <li>Open the installer — it installs for your account and adds
+                Start-menu and desktop shortcuts. No admin needed.</li>
+              <li>Open <b>Flow</b> from Start.</li>
+            </ol>
+            <div class="fix">
+              <b>If Windows says "Windows protected your PC"</b> (blue
+              SmartScreen screen) — the installer isn't signed yet. Click
+              <code>More info → Run anyway</code>.
+              <ul>
+                <li><b>Browser blocked the download?</b> Choose
+                  <code>Keep</code> in the download bubble — some browsers
+                  flag unsigned installers.</li>
+                <li><b>Work or school PC?</b> Managed machines may reject
+                  unsigned installers — that policy is Windows', not ours.</li>
+                <li><b>Firewall asks?</b> Allow Flow on <i>private</i>
+                  networks or discovery and transfers can't work.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="os">
+          <summary>
+            Mac <span class="tag">DMG · Apple silicon &amp; Intel</span>
+            <span class="chev"></span>
+          </summary>
+          <div class="os-body">
+            <ol>
+              <li>Download the DMG — Apple silicon (most Macs since 2020) or
+                <b>Intel Mac .dmg</b> for older Macs.</li>
+              <li>Quit the old Flow from its menu-bar icon first — closing its
+                window leaves it running.</li>
+              <li>Open the DMG, drag <b>Flow</b> onto <b>Applications</b>,
+                eject the image.</li>
+              <li>Because the app isn't notarized, Gatekeeper blocks the first
+                launch: <b>right-click Flow in Applications → Open →
+                Open</b>.</li>
+            </ol>
+            <div class="fix">
+              <b>Still won't open?</b> System Settings →
+              <b>Privacy &amp; Security</b> → scroll to security →
+              <code>Open Anyway</code> next to Flow, then open it and choose
+              <b>Open</b>.
+              <ul>
+                <li><b>"Flow is damaged"?</b> That message also means the
+                  signature is missing — same fix above.</li>
+                <li><b>Permission prompts:</b> allow <i>Local Network</i> for
+                  discovery, <i>Screen Recording</i> for screen sharing and
+                  extended display, <i>Accessibility</i> for keyboard/mouse
+                  linking — grant only what you use.</li>
+                <li>Flow lives in the menu bar once open — closing the window
+                  keeps it running.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="os">
+          <summary>
+            Android <span class="tag">APK · Android 7+</span>
+            <span class="chev"></span>
+          </summary>
+          <div class="os-body">
+            <ol>
+              <li>Download the <b>.apk</b> on the phone.</li>
+              <li>Open the file — Android asks once to let your browser
+                install apps; allow it.</li>
+              <li>Tap <b>Install</b> then <b>Open</b>.</li>
+            </ol>
+            <div class="fix">
+              <b>If Play Protect warns</b> — the APK is signed by the Flow
+              release key but not distributed through the Play Store:
+              <code>More details → Install anyway</code>. Only ever install it
+              from this page.
+              <ul>
+                <li>Same Wi-Fi as your computers — then the phone appears
+                  under Nearby on them, and computers appear on the phone.</li>
+                <li>Clipboard sync works while Flow is open or recently
+                  backgrounded — Android blocks clipboard access for fully
+                  closed apps; that limit is the OS's, not ours.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="os">
+          <summary>
+            iPhone &amp; iPad <span class="tag">No install</span>
+            <span class="chev"></span>
+          </summary>
+          <div class="os-body">
+            <ol>
+              <li>Join the same Wi-Fi as a computer running Flow.</li>
+              <li>On the computer, open <b>Connect a device → Web
+                browser</b> and scan the QR with the camera.</li>
+              <li>Flow opens in Safari already paired — files, text and
+                clipboard work in-browser.</li>
+            </ol>
+            <div class="fix">
+              There's no native iOS app yet, so things iOS can't do — share
+              sheet target, background clipboard — aren't available. A native
+              build is planned.
+            </div>
+          </div>
         </details>
       </section>
     </main>
