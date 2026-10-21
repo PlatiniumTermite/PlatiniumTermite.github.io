@@ -1961,6 +1961,13 @@
             "";
           plat = plat.toLowerCase();
           if (ua.indexOf("android") !== -1) return "android";
+          if (
+            ua.indexOf("iphone") !== -1 ||
+            ua.indexOf("ipad") !== -1 ||
+            ua.indexOf("ipod") !== -1 ||
+            (plat === "macintel" && navigator.maxTouchPoints > 1)
+          )
+            return "ios";
           if (plat.indexOf("win") === 0 || ua.indexOf("windows") !== -1)
             return "win";
           if (plat.indexOf("mac") === 0 || ua.indexOf("mac os") !== -1)
@@ -2043,6 +2050,15 @@
             macIntel: a.macIntel ? a.macIntel.browser_download_url : null,
             apk: a.apk ? a.apk.browser_download_url : null,
           };
+          if (os === "ios") {
+            // No installable iOS build — the app runs in Safari over LAN.
+            dlLabel.textContent = "Use Flow on iPhone / iPad";
+            dlSub.textContent = "Runs in Safari, no install — tap for setup";
+            dl.onclick = function (e) {
+              e.preventDefault();
+              document.getElementById("assist-fab").click();
+            };
+          }
           if (other) {
             var otherIsWin = other === a.win;
             dlAlt.href = other.browser_download_url;
@@ -2131,6 +2147,14 @@
               macIntel: base + "Flow-0.4.0-alpha.1-Mac-x64.dmg",
               apk: base + apkFile,
             };
+            if (os === "ios") {
+              dlLabel.textContent = "Use Flow on iPhone / iPad";
+              dlSub.textContent = "Runs in Safari, no install — tap for setup";
+              dl.onclick = function (e) {
+                e.preventDefault();
+                document.getElementById("assist-fab").click();
+              };
+            }
             otherNote.innerHTML =
               '<a href="https://github.com/' +
               REPO +
@@ -2234,7 +2258,11 @@
               ? "Windows"
               : os() === "mac"
                 ? "a Mac"
-                : "this device";
+                : os() === "android"
+                  ? "Android"
+                  : os() === "ios"
+                    ? "an iPhone or iPad"
+                    : "this device";
           sayAll([
             "Hi! I'm the Flow setup assistant — I'll walk you through installing and pairing, step by step.",
             "You appear to be on <b>" +
@@ -2250,6 +2278,7 @@
         }
 
         function justLink() {
+          if (os() === "ios") return stepIos();
           say(
             'Here you go — one click: <a href="' +
               dlUrl() +
@@ -2287,6 +2316,7 @@
         }
 
         function stepDownload() {
+          if (os() === "ios") return stepIos();
           sayAll([
             step(1, "Download the installer"),
             'Press this: <a href="' +
@@ -2302,6 +2332,34 @@
           });
         }
 
+        function stepIos() {
+          sayAll([
+            step(1, "No install needed"),
+            "Flow runs in <b>Safari</b> on iPhone and iPad — nothing to download. It just needs a computer with Flow open on the same Wi-Fi.",
+            step(2, "Get the link on your computer"),
+            "On the computer, open <b>Flow → Connect a device</b> — the QR code appears. Make sure “QR code opens in” says <b>Web browser</b>.",
+            step(3, "Scan with the Camera app"),
+            "Point the iPhone/iPad camera at the QR — Safari opens Flow <b>already joined</b> to your space. Optional: Share → <b>Add to Home Screen</b> to keep it like an app.",
+          ]).then(function () {
+            options([
+              { label: "Flow opened ✓", primary: true, go: doneQuick },
+              { label: "It didn't open", go: helpIos },
+            ]);
+          });
+        }
+        function helpIos() {
+          sayAll([
+            "Let's check the two usual things:",
+            "<ul><li>Both devices must be on the <b>same Wi-Fi</b> — not cellular, not a guest network.</li>" +
+              "<li>Flow must stay <b>open</b> on the computer — it is what your phone connects to.</li>" +
+              "<li>Still stuck? On the computer, copy the invitation shown under the QR and open it in Safari directly.</li></ul>",
+          ]).then(function () {
+            options([
+              { label: "Working now ✓", primary: true, go: doneQuick },
+              { label: "Start over", go: greet },
+            ]);
+          });
+        }
         function helpDownload() {
           sayAll([
             "No problem — a few things that usually fix it:",
