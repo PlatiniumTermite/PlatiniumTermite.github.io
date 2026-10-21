@@ -1354,7 +1354,7 @@
       <div class="nav-in">
         <div class="brand"><img src="Flow.png" alt="Flow logo" />Flow</div>
         <div class="nav-right">
-          <span class="badge">v0.6.2 — free download</span>
+          <span class="badge">v0.6.3 — free download</span>
           <a
             class="nav-link"
             href="https://github.com/PlatiniumTermite/flow-downloads/releases"
@@ -2112,15 +2112,15 @@
             throw new Error("no matching assets");
           })
           .catch(function () {
-            // Fallback: pinned to the 0.6.2 release if the API is unreachable.
+            // Fallback: pinned to the 0.6.3 release if the API is unreachable.
             var base =
               "https://github.com/" +
               REPO +
-              "/releases/download/v0.6.2/";
+              "/releases/download/v0.6.3/";
             var os = platform();
-            var winFile = "Flow-0.6.2-Windows-x64-Setup.exe";
-            var macFile = "Flow-0.6.2-Mac-arm64.dmg";
-            var apkFile = "Flow-0.6.2-Android.apk";
+            var winFile = "Flow-0.6.3-Windows-x64-Setup.exe";
+            var macFile = "Flow-0.6.3-Mac-arm64.dmg";
+            var apkFile = "Flow-0.6.3-Android.apk";
             var file =
               os === "win" ? winFile : os === "android" ? apkFile : macFile;
             dl.href = base + file;
@@ -2144,7 +2144,7 @@
               os: os,
               win: base + winFile,
               mac: base + macFile,
-              macIntel: base + "Flow-0.6.2-Mac-x64.dmg",
+              macIntel: base + "Flow-0.6.3-Mac-x64.dmg",
               apk: base + apkFile,
             };
             if (os === "ios") {
@@ -2159,7 +2159,7 @@
               '<a href="https://github.com/' +
               REPO +
               '/releases">See all downloads</a>';
-            document.getElementById("ver").textContent = "v0.6.2";
+            document.getElementById("ver").textContent = "v0.6.3";
           });
       })();
     </script>
@@ -2189,7 +2189,7 @@
         }
 
         var SUMS =
-          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.2/SHA256SUMS.txt";
+          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.3/SHA256SUMS.txt";
 
         function scrollBottom() {
           log.scrollTop = log.scrollHeight;
