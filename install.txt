@@ -107,6 +107,25 @@ Windows updates itself in the background (tray → "Check for updates…").
 Mac shows a notification linking to the download — install manually.
 Keep both devices on the same version.
 
+HOW CLOSE IS THIS TO APPLE CONTINUITY?
+--------------------------------------
+IDENTICAL: auto-discovery on Wi-Fi, approve-to-pair, files/folders/text/
+links, clipboard (text + images), resume after drops, multi-recipient,
+screen share + extended display, keyboard/mouse link both directions,
+background agent — no window needed.
+
+SAME RESULT, DIFFERENT PATH: a returning device instantly receives the
+current clipboard (Apple calls this Universal Clipboard); on Android,
+tap the notification once to capture the clipboard — the OS-legal max.
+
+NEAREST EQUIVALENT: no shared Wi-Fi → phone hotspot gives identical
+instant discovery; invitation links and a self-hosted relay cover
+internet-wide pairing.
+
+IMPOSSIBLE FOR ANY NON-APPLE APP: Apple's private wireless link (AWDL),
+clipboard while the app is fully killed by the OS, native iOS system
+integration. These are platform locks, not missing features.
+
 HONEST LIMITS
 -------------
 - Unsigned builds: the warnings above appear once per install. Normal.
