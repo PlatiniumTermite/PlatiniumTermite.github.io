@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://platiniumtermite.github.io/</loc></url>
+  <url><loc>https://platiniumtermite.github.io/download/</loc></url>
+  <url><loc>https://platiniumtermite.github.io/how-it-works/</loc></url>
+  <url><loc>https://platiniumtermite.github.io/security/</loc></url>
+  <url><loc>https://platiniumtermite.github.io/help/</loc></url>
+  <url><loc>https://platiniumtermite.github.io/alternatives/airdrop/</loc></url>
+  <url><loc>https://platiniumtermite.github.io/alternatives/localsend/</loc></url>
+  <url><loc>https://platiniumtermite.github.io/use-cases/android-to-windows/</loc></url>
+  <url><loc>https://platiniumtermite.github.io/use-cases/mac-to-windows/</loc></url>
+  <url><loc>https://platiniumtermite.github.io/use-cases/cross-platform-file-sharing/</loc></url>
   <url><loc>https://platiniumtermite.github.io/install.txt</loc></url>
+  <url><loc>https://platiniumtermite.github.io/llms.txt</loc></url>
 </urlset>

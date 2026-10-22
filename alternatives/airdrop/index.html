@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flow vs AirDrop — AirDrop-style sharing for Windows &amp; Android</title>
+    <meta
+      name="description"
+      content="AirDrop only works inside Apple's ecosystem. Flow brings the same discover-tap-approve-send experience to Windows, Android and Mac — an honest look at what's identical, what's close, and what's impossible."
+    />
+    <link rel="canonical" href="https://platiniumtermite.github.io/alternatives/airdrop/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Flow vs AirDrop — the honest comparison" />
+    <meta
+      property="og:description"
+      content="What's identical to AirDrop, what's the nearest equivalent, and what stays Apple-only — for people mixing Mac, Windows and Android."
+    />
+    <meta property="og:url" content="https://platiniumtermite.github.io/alternatives/airdrop/" />
+    <meta property="og:image" content="https://platiniumtermite.github.io/Flow.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="google-site-verification"
+      content="go0T_P_wX81kLyziP_LCDEu0iZBkW4DK059RLP5fNl0"
+    />
+    <link rel="icon" type="image/png" href="/Flow.png" />
+    <link rel="stylesheet" href="/assets/page.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Flow",
+            "item": "https://platiniumtermite.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Flow vs AirDrop",
+            "item": "https://platiniumtermite.github.io/alternatives/airdrop/"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-head">
+      <div class="in">
+        <a class="logo" href="/"><img src="/Flow.png" alt="Flow logo" />Flow</a>
+        <nav>
+          <a href="/how-it-works/">How it works</a>
+          <a href="/security/">Security</a>
+          <a href="/help/">Help</a>
+          <a class="cta" href="/download/">Download</a>
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      <div class="page-hero">
+        <p class="eyebrow">Comparison</p>
+        <h1>Flow vs AirDrop — honestly.</h1>
+        <p class="lede">
+          AirDrop is the benchmark — but it only exists between Apple devices.
+          Flow recreates the experience for people whose devices aren't all
+          from one company. Here's the truthful scorecard.
+        </p>
+      </div>
+
+      <section>
+        <h2>Identical in daily use</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>Discover → tap → approve → send</h3>
+            <p>
+              Same flow: your other device appears automatically, you tap it,
+              the owner approves, files fly with progress.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Files, folders, text, links</h3>
+            <p>
+              Everything AirDrop carries, Flow carries — including whole
+              folders and send-to-many.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Universal Clipboard</h3>
+            <p>
+              Copy on one computer, paste on the other — text and images, both
+              directions, no send step at all.
+            </p>
+          </div>
+          <div class="card">
+            <h3>No window required</h3>
+            <p>
+              Menu bar / tray agent means the device is always there — like
+              AirDrop's always-on presence.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Nearest equivalents — different path, same result</h2>
+        <ul>
+          <li>
+            <strong>No shared Wi-Fi.</strong> AirDrop uses Apple's private
+            AWDL radios to work offline — a locked capability no third-party
+            app can use. Flow's closest paths: a phone hotspot (instant shared
+            LAN, identical feel), invitation links, or a self-hosted relay for
+            internet-wide pairing.
+          </li>
+          <li>
+            <strong>Sidecar / extended display.</strong> Flow's extended
+            display works over Wi-Fi to another computer — experimental, and
+            Windows receivers may need a virtual-display driver.
+          </li>
+          <li>
+            <strong>Universal Control.</strong> Flow's keyboard/mouse link
+            covers the same ground in both directions — gated by approval,
+            heartbeat-supervised, Escape to release.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Genuinely Apple-only — what Flow can't do</h2>
+        <ul>
+          <li>
+            <strong>Transfers with no network at all.</strong> AWDL/Bluetooth
+            handoff is hardware Apple reserves; no third-party app gets it.
+          </li>
+          <li>
+            <strong>Clipboard sync while the app is fully off.</strong> An OS
+            restriction for anything not built into the system — Flow replays
+            your clipboard the moment a device comes back, which is the same
+            end result once it's running.
+          </li>
+          <li>
+            <strong>Zero-friction iOS integration.</strong> AirDrop is built
+            into iOS; Flow joins iPhones via Safari today, with a native app
+            planned.
+          </li>
+        </ul>
+        <div class="warn">
+          Any app claiming "real AirDrop on Windows" is overstating it — those
+          radios are private. The honest promise is identical behavior on your
+          network, and the closest possible equivalents beyond it.
+        </div>
+      </section>
+
+      <section>
+        <h2>Where Flow actually goes past AirDrop</h2>
+        <ul>
+          <li>
+            <strong>It isn't Apple-only.</strong> Windows, Mac and Android in
+            one space — that's the entire point.
+          </li>
+          <li>
+            <strong>Friend sessions.</strong> Invite someone outside your
+            devices with an isolated space that excludes your personal
+            clipboard.
+          </li>
+          <li>
+            <strong>Queue &amp; resume.</strong> Sends wait for reconnecting
+            devices and resume mid-file after drops.
+          </li>
+          <li>
+            <strong>Self-hostable relay</strong> for people who want
+            internet-wide pairing on their own infrastructure.
+          </li>
+        </ul>
+      </section>
+
+      <div class="cta-band">
+        <h2>The non-Apple devices deserve this too.</h2>
+        <p>Same discovery, same approval, same effortlessness — across every OS you own.</p>
+        <a class="btn" href="/download/">Download Flow</a>
+        <a class="btn ghost" href="/alternatives/localsend/">vs LocalSend</a>
+      </div>
+    </main>
+    <footer class="site-foot">
+      <div class="wrap">
+        <div class="links">
+          <a href="/">Home</a>
+          <a href="/download/">Download</a>
+          <a href="/how-it-works/">How it works</a>
+          <a href="/security/">Security</a>
+          <a href="/help/">Help</a>
+          <a href="/alternatives/airdrop/">vs AirDrop</a>
+          <a href="/alternatives/localsend/">vs LocalSend</a>
+          <a href="/install.txt">Install guide (text)</a>
+        </div>
+        <p class="fine">
+          Flow is early alpha software provided "as is", without warranty of
+          any kind. AirDrop, Continuity, Universal Clipboard, Universal
+          Control and Sidecar are Apple trademarks; Flow is not affiliated
+          with or endorsed by Apple.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

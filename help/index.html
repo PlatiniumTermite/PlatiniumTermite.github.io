@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flow help — install warnings, pairing and troubleshooting</title>
+    <meta
+      name="description"
+      content="Get past every OS install warning, connect devices that can't see each other, and fix common Flow issues — exact clicks for Windows, Mac and Android."
+    />
+    <link rel="canonical" href="https://platiniumtermite.github.io/help/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Flow help — install, pairing, troubleshooting" />
+    <meta
+      property="og:description"
+      content="The exact clicks for every warning and fix for devices that can't find each other."
+    />
+    <meta property="og:url" content="https://platiniumtermite.github.io/help/" />
+    <meta property="og:image" content="https://platiniumtermite.github.io/Flow.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="google-site-verification"
+      content="go0T_P_wX81kLyziP_LCDEu0iZBkW4DK059RLP5fNl0"
+    />
+    <link rel="icon" type="image/png" href="/Flow.png" />
+    <link rel="stylesheet" href="/assets/page.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Flow",
+            "item": "https://platiniumtermite.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Help",
+            "item": "https://platiniumtermite.github.io/help/"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "My devices can't see each other in Flow",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Check both are on the same Wi-Fi (not a guest or isolated network), Flow is running on both (menu bar / tray counts), and your firewall allowed Flow on private networks. On different networks, use a phone hotspot, an invitation link, or a self-hosted relay."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does Windows SmartScreen block Flow?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Flow is an unsigned early-alpha build, so SmartScreen shows its standard caution. Click 'More info → Run anyway'. If the browser blocked the download, choose 'Keep' first."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why can't my Android clipboard sync in the background?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Android 10+ blocks clipboard reads for background apps — an OS restriction every third-party app shares. Flow captures it when the app is in the foreground or via the notification tap path, and syncs instantly from there."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Flow work on iPhone and iPad?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Through Safari — scan the QR invitation or open the invite link. iOS Safari can't do background clipboard or share-sheet integration, so a native iOS app is planned for those."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-head">
+      <div class="in">
+        <a class="logo" href="/"><img src="/Flow.png" alt="Flow logo" />Flow</a>
+        <nav>
+          <a href="/how-it-works/">How it works</a>
+          <a href="/security/">Security</a>
+          <a href="/help/">Help</a>
+          <a class="cta" href="/download/">Download</a>
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      <div class="page-hero">
+        <p class="eyebrow">Help</p>
+        <h1>Stuck? It's almost always one of these.</h1>
+        <p class="lede">
+          The exact clicks for every warning, and the fixes for the issues
+          real users actually hit.
+        </p>
+      </div>
+
+      <section>
+        <h2>Install warnings — what to click</h2>
+        <table>
+          <tr><th>Platform</th><th>Warning</th><th>Fix</th></tr>
+          <tr>
+            <td>Windows</td>
+            <td>"Windows protected your PC" (SmartScreen)</td>
+            <td><code>More info → Run anyway</code></td>
+          </tr>
+          <tr>
+            <td>Windows</td>
+            <td>Browser blocked the .exe download</td>
+            <td><code>Keep</code> in the downloads bar</td>
+          </tr>
+          <tr>
+            <td>Windows</td>
+            <td>Firewall prompt on first launch</td>
+            <td>Allow on <strong>private networks</strong></td>
+          </tr>
+          <tr>
+            <td>Mac</td>
+            <td>"Flow can't be opened…" / "unidentified developer"</td>
+            <td>Right-click Flow → <code>Open</code> → <code>Open</code></td>
+          </tr>
+          <tr>
+            <td>Mac</td>
+            <td>"Flow is damaged"</td>
+            <td>Same fix — right-click → Open → Open</td>
+          </tr>
+          <tr>
+            <td>Android</td>
+            <td>Play Protect warning</td>
+            <td><code>More details → Install anyway</code></td>
+          </tr>
+          <tr>
+            <td>Android</td>
+            <td>"Install unknown apps" blocked</td>
+            <td>Allow it for your browser once, then install</td>
+          </tr>
+        </table>
+        <p>
+          Why the warnings exist: Flow is an unsigned alpha distributed
+          outside the app stores. Signed builds are planned; the warnings are
+          expected, not malware.
+        </p>
+      </section>
+
+      <section>
+        <h2>Devices can't see each other</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="n"></div>
+            <div>
+              <h3>Same Wi-Fi on both — really</h3>
+              <p>
+                Guest networks and "AP isolation" block discovery. Check the
+                network name matches; if your router isolates clients, use the
+                hotspot path below.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n"></div>
+            <div>
+              <h3>Flow is actually running</h3>
+              <p>
+                The window can be closed — but the menu-bar (Mac) or tray
+                (Windows) icon must be there, and on Android the app must be
+                open or recently used.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n"></div>
+            <div>
+              <h3>Try the instant fallback: hotspot</h3>
+              <p>
+                Turn on a phone's Personal Hotspot, join both devices to it —
+                it's a normal LAN, so discovery and transfers work exactly
+                like shared Wi-Fi.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n"></div>
+            <div>
+              <h3>Different networks entirely</h3>
+              <p>
+                Use an invitation link / QR where the connection address is
+                reachable, or point Flow at a self-hosted
+                <code>wss://</code> relay (Settings → Connection details).
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Feature-specific notes</h2>
+        <ul>
+          <li>
+            <strong>Android clipboard</strong> — Android blocks background
+            clipboard reads for every third-party app. Flow syncs instantly
+            while the app is open and captures via the notification-tap path
+            otherwise.
+          </li>
+          <li>
+            <strong>iPhone / iPad</strong> — join via Safari (QR or link).
+            Clipboard-in-browser works; share-sheet and background sync need
+            the native iOS app, which is planned.
+          </li>
+          <li>
+            <strong>Extended display</strong> — experimental. Mac→computer is
+            supported; Windows receivers may need a virtual-display driver for
+            wireless second-screen use.
+          </li>
+          <li>
+            <strong>Keyboard/mouse link</strong> — needs its setting enabled on
+            the receiving computer <em>and</em> a per-session approval. Escape
+            releases instantly; lock, sleep and revocation all tear it down.
+          </li>
+          <li>
+            <strong>Where do files land?</strong> — your Downloads folder, with
+            automatic collision renaming.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Still stuck?</h2>
+        <p>
+          The plain-text install guide covers every step in detail:
+          <a href="/install.txt">install.txt</a>. For bugs, open an issue on
+          <a href="https://github.com/PlatiniumTermite/flow">GitHub</a> with
+          your OS versions and what you tried.
+        </p>
+      </section>
+
+      <div class="cta-band">
+        <h2>Ready when you are.</h2>
+        <p>Everything here also ships inside the app's setup assistant.</p>
+        <a class="btn" href="/download/">Download Flow</a>
+      </div>
+    </main>
+    <footer class="site-foot">
+      <div class="wrap">
+        <div class="links">
+          <a href="/">Home</a>
+          <a href="/download/">Download</a>
+          <a href="/how-it-works/">How it works</a>
+          <a href="/security/">Security</a>
+          <a href="/help/">Help</a>
+          <a href="/alternatives/airdrop/">vs AirDrop</a>
+          <a href="/alternatives/localsend/">vs LocalSend</a>
+          <a href="/install.txt">Install guide (text)</a>
+        </div>
+        <p class="fine">
+          Flow is early alpha software provided "as is", without warranty of
+          any kind. The authors and contributors are not liable for any damage,
+          data loss, device problems or other issues arising from downloading
+          or using it — use it at your own risk and keep backups of files that
+          matter.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

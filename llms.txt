@@ -31,6 +31,13 @@
 
 ## Docs
 
+- [Download](https://platiniumtermite.github.io/download/): every platform's installer + the exact warning fixes
+- [How it works](https://platiniumtermite.github.io/how-it-works/): discovery, pairing, transfers, clipboard, displays
+- [Security & privacy](https://platiniumtermite.github.io/security/): local-first model, encryption, honest alpha caveats
+- [Help](https://platiniumtermite.github.io/help/): every OS warning's fix + troubleshooting
+- [Flow vs AirDrop](https://platiniumtermite.github.io/alternatives/airdrop/): what's identical, close, and Apple-only
+- [Flow vs LocalSend](https://platiniumtermite.github.io/alternatives/localsend/): feature-by-feature comparison
+- [Android ↔ Windows](https://platiniumtermite.github.io/use-cases/android-to-windows/), [Mac ↔ Windows](https://platiniumtermite.github.io/use-cases/mac-to-windows/), [Cross-platform sharing](https://platiniumtermite.github.io/use-cases/cross-platform-file-sharing/): use-case guides
 - [Plain install guide](https://platiniumtermite.github.io/install.txt): every platform, every OS warning and exactly what to click
 - [Website + downloads](https://platiniumtermite.github.io/): auto-detects the visitor's OS
 - [Releases](https://github.com/PlatiniumTermite/flow-downloads/releases): installers + SHA256SUMS.txt

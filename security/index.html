@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flow security &amp; privacy — local-first, approval-gated, no accounts</title>
+    <meta
+      name="description"
+      content="How Flow protects your data: local-only discovery, explicit approval for every connection, encrypted peer-to-peer transfers, no accounts, no cloud uploads — plus honest alpha-status caveats."
+    />
+    <link rel="canonical" href="https://platiniumtermite.github.io/security/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Flow security &amp; privacy — local-first by design" />
+    <meta
+      property="og:description"
+      content="Approval-gated pairing, encrypted device-to-device transfers, no accounts, nothing uploaded. What Flow does with your data — and what it never sees."
+    />
+    <meta property="og:url" content="https://platiniumtermite.github.io/security/" />
+    <meta property="og:image" content="https://platiniumtermite.github.io/Flow.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="google-site-verification"
+      content="go0T_P_wX81kLyziP_LCDEu0iZBkW4DK059RLP5fNl0"
+    />
+    <link rel="icon" type="image/png" href="/Flow.png" />
+    <link rel="stylesheet" href="/assets/page.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Flow",
+            "item": "https://platiniumtermite.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Security",
+            "item": "https://platiniumtermite.github.io/security/"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-head">
+      <div class="in">
+        <a class="logo" href="/"><img src="/Flow.png" alt="Flow logo" />Flow</a>
+        <nav>
+          <a href="/how-it-works/">How it works</a>
+          <a href="/security/">Security</a>
+          <a href="/help/">Help</a>
+          <a class="cta" href="/download/">Download</a>
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      <div class="page-hero">
+        <p class="eyebrow">Security &amp; privacy</p>
+        <h1>Local-first. Approval-gated. No accounts.</h1>
+        <p class="lede">
+          Flow is designed so your files never leave your devices — there's no
+          cloud to upload to, and nothing happens without someone pressing
+          Allow.
+        </p>
+      </div>
+
+      <section>
+        <h2>What protects you</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>Explicit approval, always</h3>
+            <p>
+              Pairing, screen sharing, extended display and keyboard/mouse
+              control each require someone on the receiving device to press
+              Allow. There is no silent connect path — including from devices
+              you've used before.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Encrypted, device-to-device</h3>
+            <p>
+              Transfers ride WebRTC data channels, which are encrypted
+              end-to-end by the transport itself (DTLS). Content moves directly
+              between your devices — it doesn't transit a Flow server.
+            </p>
+          </div>
+          <div class="card">
+            <h3>No accounts, no uploads</h3>
+            <p>
+              There's no Flow account, no email, no cloud inbox. Your files,
+              clipboard and screens stay on your network — discovery is local
+              mDNS, and payloads go peer-to-peer.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Scoped control</h3>
+            <p>
+              Keyboard/mouse linking needs its own opt-in setting
+              <em>and</em> per-session approval, sends heartbeats, and tears
+              down on Escape, lock, sleep, revocation or disconnect.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Friend sessions are isolated</h3>
+            <p>
+              Sharing with someone else's device uses a separate friend space —
+              your personal devices and clipboard are never included, and the
+              session is meant to be ended when done.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Verifiable builds</h3>
+            <p>
+              Every release ships a SHA256SUMS.txt so you can verify the file
+              you downloaded is the file that was built. Source code is public
+              on GitHub.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>What leaves your device — and what doesn't</h2>
+        <table>
+          <tr><th>Data</th><th>Where it goes</th></tr>
+          <tr>
+            <td>Files, folders, clipboard, screens, input events</td>
+            <td><span class="yes">Device-to-device only</span> — encrypted WebRTC, never a Flow server</td>
+          </tr>
+          <tr>
+            <td>Device name &amp; presence</td>
+            <td>mDNS broadcast on your local network; signaling to the Flow instance you connect to (your own device or a relay you choose)</td>
+          </tr>
+          <tr>
+            <td>Accounts, analytics, telemetry</td>
+            <td><span class="yes">None</span> — there is no Flow account system and no usage telemetry in the app</td>
+          </tr>
+          <tr>
+            <td>Update checks (Windows)</td>
+            <td>Reads the release feed on GitHub when you press "Check for updates" or on launch</td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>Honest caveats — early alpha</h2>
+        <ul>
+          <li>
+            <strong>Unsigned builds.</strong> Installers aren't yet code-signed
+            or notarized, so OSes show standard unknown-developer warnings.
+            Verify checksums if you want extra assurance.
+          </li>
+          <li>
+            <strong>Alpha software.</strong> It has an automated test suite and
+            packaged smoke tests, but hasn't been through a formal security
+            audit. Don't use it for highly sensitive data yet.
+          </li>
+          <li>
+            <strong>Same-network trust.</strong> mDNS discovery trusts the
+            local network — approval prompts are the line that keeps strangers
+            out. Only approve devices you recognize, exactly like AirDrop.
+          </li>
+          <li>
+            <strong>Screen &amp; input features are powerful.</strong> They're
+            approval-gated and revoke cleanly, but treat them like handing
+            someone your keyboard — because functionally, you are.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Report a security issue</h2>
+        <p>
+          Found something? Please report it privately by opening an issue on
+          the
+          <a href="https://github.com/PlatiniumTermite/flow">source repository</a>
+          marked as a security concern — don't post exploit details publicly
+          first.
+        </p>
+      </section>
+
+      <div class="cta-band">
+        <h2>Local-first sharing, no accounts required.</h2>
+        <p>Everything stays on your Wi-Fi — verify it yourself, the source is open.</p>
+        <a class="btn" href="/download/">Download Flow</a>
+        <a class="btn ghost" href="/how-it-works/">How it works</a>
+      </div>
+    </main>
+    <footer class="site-foot">
+      <div class="wrap">
+        <div class="links">
+          <a href="/">Home</a>
+          <a href="/download/">Download</a>
+          <a href="/how-it-works/">How it works</a>
+          <a href="/security/">Security</a>
+          <a href="/help/">Help</a>
+          <a href="/alternatives/airdrop/">vs AirDrop</a>
+          <a href="/alternatives/localsend/">vs LocalSend</a>
+          <a href="/install.txt">Install guide (text)</a>
+        </div>
+        <p class="fine">
+          Flow is early alpha software provided "as is", without warranty of
+          any kind. The authors and contributors are not liable for any damage,
+          data loss, device problems or other issues arising from downloading
+          or using it — use it at your own risk and keep backups of files that
+          matter.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

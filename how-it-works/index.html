@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>How Flow works — discovery, pairing, transfers, clipboard &amp; displays</title>
+    <meta
+      name="description"
+      content="How Flow connects your devices: mDNS discovery on Wi-Fi, approval-gated pairing, peer-to-peer WebRTC transfers, clipboard sync, screen sharing, extended display and keyboard/mouse linking."
+    />
+    <link rel="canonical" href="https://platiniumtermite.github.io/how-it-works/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Flow works — your devices, one connected experience" />
+    <meta
+      property="og:description"
+      content="Local discovery, approval pairing and peer-to-peer transfers — how Flow moves files, clipboard and screens between Mac, Windows and Android."
+    />
+    <meta property="og:url" content="https://platiniumtermite.github.io/how-it-works/" />
+    <meta property="og:image" content="https://platiniumtermite.github.io/Flow.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="google-site-verification"
+      content="go0T_P_wX81kLyziP_LCDEu0iZBkW4DK059RLP5fNl0"
+    />
+    <link rel="icon" type="image/png" href="/Flow.png" />
+    <link rel="stylesheet" href="/assets/page.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Flow",
+            "item": "https://platiniumtermite.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "How it works",
+            "item": "https://platiniumtermite.github.io/how-it-works/"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-head">
+      <div class="in">
+        <a class="logo" href="/"><img src="/Flow.png" alt="Flow logo" />Flow</a>
+        <nav>
+          <a href="/how-it-works/">How it works</a>
+          <a href="/security/">Security</a>
+          <a href="/help/">Help</a>
+          <a class="cta" href="/download/">Download</a>
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      <div class="page-hero">
+        <p class="eyebrow">How it works</p>
+        <h1>Your devices. One connected experience.</h1>
+        <p class="lede">
+          Flow makes your computers and phone aware of each other on your own
+          network — then moves files, clipboard and screens between them
+          directly, device to device.
+        </p>
+      </div>
+
+      <section>
+        <h2>1 · Discovery — devices find each other</h2>
+        <p>
+          When Flow runs on two devices on the same Wi-Fi, each announces
+          itself over <strong>mDNS</strong> — the same Bonjour technology Apple
+          uses for AirDrop discovery. Your other computer simply appears in the
+          Nearby list, named by its device label. No accounts, no QR codes
+          required for your own machines.
+        </p>
+        <p>
+          Flow lives in the Mac menu bar and Windows system tray, so discovery
+          keeps working even when no window is open — like AirDrop, being
+          "there" is the default state.
+        </p>
+      </section>
+
+      <section>
+        <h2>2 · Pairing — approval, always</h2>
+        <p>
+          Nothing connects silently. When one device taps
+          <code>Connect</code>, the other shows a pairing request with the
+          requester's name; only <code>Allow</code> creates the link. Friend
+          sessions work the same way through invitation links or QR codes —
+          and they stay isolated from your personal space and clipboard.
+        </p>
+      </section>
+
+      <section>
+        <h2>3 · Transfers — peer to peer, not through a server</h2>
+        <p>
+          Once paired, Flow opens a <strong>WebRTC</strong> connection between
+          the devices and sends data over an encrypted channel directly —
+          files, folders, text and links never touch a third-party server.
+          Transfers show live progress, handle filename collisions in
+          Downloads, resume from the last byte after a disconnect, and can go
+          to several recipients independently.
+        </p>
+      </section>
+
+      <section>
+        <h2>Everything that moves</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>Files &amp; folders</h3>
+            <p>
+              Any size, whole folders, with checksums, resume and
+              send-to-many. From the share sheet on Android, or Send To /
+              Open With on desktops.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Clipboard</h3>
+            <p>
+              Copy on one device, paste on another — text and images between
+              desktops, like Universal Clipboard. A device joining later
+              inherits the current clipboard.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Screen sharing</h3>
+            <p>
+              View another computer's screen with live metrics — only after
+              the owner accepts. Stopping is one click and kills the capture.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Extended display</h3>
+            <p>
+              Experimental: a Mac can extend its desktop onto a connected
+              computer over Wi-Fi, and the receiver's own keyboard and mouse
+              can drive it.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Keyboard &amp; mouse link</h3>
+            <p>
+              Control a connected computer's input in either direction —
+              approval-gated, heartbeat-supervised, one click or Escape to
+              release.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Queued &amp; resumable</h3>
+            <p>
+              Sends to a device that's still connecting queue up and deliver
+              when it arrives. Reconnects pick up where they left off.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>When devices aren't on the same Wi-Fi</h2>
+        <p>
+          AirDrop sidesteps this with Apple's private radios — no third-party
+          app can use those. Flow's nearest equivalents:
+        </p>
+        <ul>
+          <li>
+            <strong>Phone hotspot</strong> — one device hosts, both join; it's
+            a normal LAN, so discovery works identically. Fastest option.
+          </li>
+          <li>
+            <strong>Invitation links / QR</strong> — works wherever the
+            connection address is reachable.
+          </li>
+          <li>
+            <strong>Self-hosted relay</strong> — advanced users can point Flow
+            at their own <code>wss://</code> signaling endpoint for
+            internet-wide pairing.
+          </li>
+        </ul>
+      </section>
+
+      <div class="cta-band">
+        <h2>Try it on two devices.</h2>
+        <p>Free, no accounts — install, same Wi-Fi, Connect → Allow.</p>
+        <a class="btn" href="/download/">Download Flow</a>
+        <a class="btn ghost" href="/security/">Security &amp; privacy</a>
+      </div>
+    </main>
+    <footer class="site-foot">
+      <div class="wrap">
+        <div class="links">
+          <a href="/">Home</a>
+          <a href="/download/">Download</a>
+          <a href="/how-it-works/">How it works</a>
+          <a href="/security/">Security</a>
+          <a href="/help/">Help</a>
+          <a href="/alternatives/airdrop/">vs AirDrop</a>
+          <a href="/alternatives/localsend/">vs LocalSend</a>
+          <a href="/install.txt">Install guide (text)</a>
+        </div>
+        <p class="fine">
+          Flow is early alpha software provided "as is", without warranty of
+          any kind. The authors and contributors are not liable for any damage,
+          data loss, device problems or other issues arising from downloading
+          or using it — use it at your own risk and keep backups of files that
+          matter.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
