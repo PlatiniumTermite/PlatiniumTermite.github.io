@@ -133,3 +133,10 @@ HONEST LIMITS
 - iPhone/iPad: Safari only, no native app yet.
 - Windows extended display: needs a real monitor or third-party
   virtual-display driver — Flow doesn't install one.
+
+DISCLAIMER
+----------
+Flow is early alpha software provided "as is", without warranty of any
+kind. The authors and contributors are not liable for any damage, data
+loss, device problems or other issues arising from downloading or using
+it — you use it at your own risk. Keep backups of files that matter.
