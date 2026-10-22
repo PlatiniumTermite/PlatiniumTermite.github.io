@@ -1637,7 +1637,7 @@
       <div class="nav-in">
         <div class="brand"><img src="Flow.png" alt="Flow logo" />Flow</div>
         <div class="nav-right">
-          <span class="badge">v0.6.8 — free download</span>
+          <span class="badge">v0.6.9 — free download</span>
           <a class="nav-link" href="#install">Install guide</a>
           <a
             class="nav-link"
@@ -2564,15 +2564,15 @@
             throw new Error("no matching assets");
           })
           .catch(function () {
-            // Fallback: pinned to the 0.6.8 release if the API is unreachable.
+            // Fallback: pinned to the 0.6.9 release if the API is unreachable.
             var base =
               "https://github.com/" +
               REPO +
-              "/releases/download/v0.6.8/";
+              "/releases/download/v0.6.9/";
             var os = platform();
-            var winFile = "Flow-0.6.8-Windows-x64-Setup.exe";
-            var macFile = "Flow-0.6.8-Mac-arm64.dmg";
-            var apkFile = "Flow-0.6.8-Android.apk";
+            var winFile = "Flow-0.6.9-Windows-x64-Setup.exe";
+            var macFile = "Flow-0.6.9-Mac-arm64.dmg";
+            var apkFile = "Flow-0.6.9-Android.apk";
             var file =
               os === "win" ? winFile : os === "android" ? apkFile : macFile;
             dl.href = base + file;
@@ -2596,7 +2596,7 @@
               os: os,
               win: base + winFile,
               mac: base + macFile,
-              macIntel: base + "Flow-0.6.8-Mac-x64.dmg",
+              macIntel: base + "Flow-0.6.9-Mac-x64.dmg",
               apk: base + apkFile,
             };
             if (os === "ios") {
@@ -2611,11 +2611,11 @@
               '<a href="https://github.com/' +
               REPO +
               '/releases">See all downloads</a>';
-            document.getElementById("ver").textContent = "v0.6.8";
+            document.getElementById("ver").textContent = "v0.6.9";
             var foot = {
               "win-link": base + winFile,
               "mac-link": base + macFile,
-              "mac-intel-link": base + "Flow-0.6.8-Mac-x64.dmg",
+              "mac-intel-link": base + "Flow-0.6.9-Mac-x64.dmg",
               "apk-link": base + apkFile,
               "sums-link": base + "SHA256SUMS.txt",
             };
@@ -2655,7 +2655,7 @@
         }
 
         var SUMS =
-          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.8/SHA256SUMS.txt";
+          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.9/SHA256SUMS.txt";
 
         function scrollBottom() {
           log.scrollTop = log.scrollHeight;
