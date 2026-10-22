@@ -44,6 +44,79 @@
     />
     <meta name="theme-color" content="#fafafa" />
     <link rel="icon" type="image/png" href="Flow.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Flow",
+        "alternateName": "Flow Universal Continuity",
+        "description": "AirDrop-like continuity for every device: share files, folders, text, links, clipboard, screens and keyboard/mouse between Mac, Windows and Android over Wi-Fi. Devices discover each other automatically and every connection asks for approval.",
+        "operatingSystem": "macOS, Windows, Android",
+        "applicationCategory": "UtilitiesApplication",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "url": "https://platiniumtermite.github.io/",
+        "downloadUrl": "https://github.com/PlatiniumTermite/flow-downloads/releases",
+        "softwareVersion": "0.6.9",
+        "featureList": "AirDrop-style file sharing, universal clipboard sync, extended display to a second computer, bidirectional keyboard and mouse link, screen sharing with approval, resumable transfers, menu-bar and system-tray agent",
+        "keywords": "airdrop for windows, apple continuity for windows, share files mac windows android, universal clipboard windows mac, extended display second computer, universal control alternative"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is there an AirDrop for Windows or Android?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Flow is the closest equivalent: a free app that puts AirDrop-style sending on Windows, macOS and Android. Devices on the same Wi-Fi discover each other automatically, the receiver approves, and files, folders, text, links and clipboard move wirelessly."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I share files between a Mac and a Windows PC wirelessly?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Install Flow on both computers and join the same Wi-Fi. The computers find each other like AirDrop, one side taps Connect, the other taps Allow, and files can be sent in either direction with progress, resume and folder support."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can one clipboard work across Mac, Windows and Android?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Flow syncs copied text in both directions between desktops — like Apple's Universal Clipboard — and clipboard images between desktops too. Android participates through the app and share sheet."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can Flow use another computer as a second display?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes — a Mac can extend its desktop onto a connected Windows or Mac computer over Wi-Fi (experimental), and either side can drive the extended screen with its own keyboard and mouse after approval."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Flow need the internet?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Everything runs on your local Wi-Fi — discovery, pairing, files, clipboard and displays. A phone hotspot works when there's no router. For devices on different networks, invitation links or a self-hosted relay can bridge them."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does my computer warn me when installing Flow?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Flow is an early-alpha build distributed outside the app stores, so Windows SmartScreen, macOS Gatekeeper and Play Protect show their standard 'unknown developer' warnings. On Windows click More info → Run anyway; on Mac right-click Flow → Open → Open; on Android tap More details → Install anyway."
+            }
+          }
+        ]
+      }
+    </script>
     <style>
       :root {
         --blue: #0674ed;
@@ -2289,6 +2362,102 @@
               sheet target, background clipboard — aren't available. A native
               build is planned.
             </div>
+          </div>
+        </details>
+      </section>
+
+      <section class="install reveal" id="faq">
+        <h2 class="reveal">Questions people ask.</h2>
+        <p class="reveal" style="--d: 0.06s">
+          The quick answers — the same ones search engines and AI assistants
+          read.
+        </p>
+        <details class="os">
+          <summary>
+            Is there an AirDrop for Windows or Android?
+            <span class="chev"></span>
+          </summary>
+          <div class="os-body">
+            <p>
+              Flow is the closest equivalent — a free app that brings
+              AirDrop-style sending to Windows, macOS and Android. Devices on
+              the same Wi-Fi discover each other automatically, the receiver
+              approves, and files, folders, text, links and clipboard move
+              wirelessly in both directions.
+            </p>
+          </div>
+        </details>
+        <details class="os">
+          <summary>
+            How do I share files between a Mac and a Windows PC wirelessly?
+            <span class="chev"></span>
+          </summary>
+          <div class="os-body">
+            <p>
+              Install Flow on both computers and join the same Wi-Fi. They find
+              each other like AirDrop — tap <code>Connect</code> on one side,
+              <code>Allow</code> on the other — then send files either way with
+              progress, pause/resume and whole-folder support.
+            </p>
+          </div>
+        </details>
+        <details class="os">
+          <summary>
+            Can one clipboard work across Mac, Windows and Android?
+            <span class="chev"></span>
+          </summary>
+          <div class="os-body">
+            <p>
+              Yes. Copied text syncs instantly in both directions between
+              desktops — like Apple's Universal Clipboard — including clipboard
+              images between desktops, and a device that joins later inherits
+              the current clipboard. Android participates through the app and
+              share sheet.
+            </p>
+          </div>
+        </details>
+        <details class="os">
+          <summary>
+            Can Flow use another computer as a second display?
+            <span class="chev"></span>
+          </summary>
+          <div class="os-body">
+            <p>
+              Yes — a Mac can extend its desktop onto a connected Windows or
+              Mac computer over Wi-Fi (experimental). Once accepted, the
+              receiving computer's own keyboard and mouse drive the extended
+              screen, like Universal Control.
+            </p>
+          </div>
+        </details>
+        <details class="os">
+          <summary>
+            Does Flow need the internet, or just Wi-Fi?
+            <span class="chev"></span>
+          </summary>
+          <div class="os-body">
+            <p>
+              Just Wi-Fi — or even a phone hotspot. Discovery, pairing, files,
+              clipboard and displays all run locally; nothing is uploaded or
+              relayed through a cloud. For devices on different networks,
+              invitation links or a self-hosted relay can bridge them.
+            </p>
+          </div>
+        </details>
+        <details class="os">
+          <summary>
+            Why does Windows, Mac or Android warn me when installing Flow?
+            <span class="chev"></span>
+          </summary>
+          <div class="os-body">
+            <p>
+              Flow is an early-alpha build distributed outside the app stores,
+              so SmartScreen, Gatekeeper and Play Protect show their standard
+              "unknown developer" warnings. On Windows click
+              <code>More info → Run anyway</code>; on Mac right-click Flow →
+              <code>Open</code> → <code>Open</code>; on Android tap
+              <code>More details → Install anyway</code>.
+            </p>
           </div>
         </details>
       </section>
