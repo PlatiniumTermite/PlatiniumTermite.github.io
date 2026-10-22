@@ -85,6 +85,22 @@ HOW TO USE (after install on both devices)
    or Android's share sheet. Clipboard syncs by default.
 5. Incoming files notify — click the notification to accept.
 
+DEVICES ON DIFFERENT WI-FI? (nearest to AirDrop)
+------------------------------------------------
+Flow discovers devices on the same network — no third-party app can use
+Apple's private wireless link. Closest equivalents, in order:
+
+1. PHONE HOTSPOT — turn on Personal Hotspot on a phone and connect both
+   devices to it. Nearby discovery then works exactly like AirDrop:
+   devices appear automatically and pair with approval. This is the
+   recommended "no shared Wi-Fi" path.
+2. INVITATION LINK — copy the private invitation from Connect a device
+   and send it any way. Works wherever the host's connection address is
+   reachable (same network, forwarded port, or a relay you host).
+3. SELF-HOSTED RELAY (advanced) — run the Flow signaling server on a
+   reachable machine (VPS or forwarded port) and point devices at its
+   wss:// address in Settings → Connection details. Internet-wide pairing.
+
 UPDATES
 -------
 Windows updates itself in the background (tray → "Check for updates…").
