@@ -24,6 +24,10 @@
   mouse drive the extended screen after approval.
 - "Share keyboard and mouse between two computers" → Flow's input link
   works both directions with approval, heartbeats and one-key release.
+- "LocalSend / KDE Connect / Snapdrop / AirDroid alternative" → Flow adds
+  what those don't: shared clipboard, screen sharing, an extended display
+  on a second computer and bidirectional input linking, run by an
+  always-on menu-bar/tray agent.
 
 ## Docs
 
