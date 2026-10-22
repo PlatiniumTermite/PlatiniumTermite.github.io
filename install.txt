@@ -1,0 +1,100 @@
+FLOW — PLAIN INSTALL GUIDE
+==========================
+What Flow is: a continuity app. Devices on the same Wi-Fi find each other
+automatically, pair with approval, and share files, folders, text, clipboard,
+screens, and keyboard/mouse. Works between Windows, Mac and Android.
+iPhone/iPad join through Safari — no install needed.
+
+DOWNLOADS (current release v0.6.8)
+----------------------------------
+Website (auto-picks your OS, always latest): https://platiniumtermite.github.io/
+Latest release page:                         https://github.com/PlatiniumTermite/flow-downloads/releases/latest
+Windows x64 installer: https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.8/Flow-0.6.8-Windows-x64-Setup.exe
+Mac Apple silicon:    https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.8/Flow-0.6.8-Mac-arm64.dmg
+Mac Intel:            https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.8/Flow-0.6.8-Mac-x64.dmg
+Android APK:          https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.8/Flow-0.6.8-Android.apk
+Checksums:            https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.8/SHA256SUMS.txt
+
+INSTALL — WINDOWS
+-----------------
+1. Download and open the Setup.exe.
+2. If the browser says the file is unsafe: choose "Keep".
+3. Install finishes → Flow runs from the system tray (bottom-right clock area).
+
+INSTALL — MAC
+-------------
+1. Download and open the DMG (arm64 for Apple silicon, x64 for Intel).
+2. Drag Flow onto Applications. Eject the image.
+3. Open Flow from Applications once. It lives in the menu bar (top-right).
+4. When macOS asks: allow Local Network (needed to find devices),
+   Screen Recording (only for screen sharing), Accessibility (only for
+   keyboard/mouse linking).
+
+INSTALL — ANDROID (needs Android 7+)
+------------------------------------
+1. Download the APK on the phone and open it.
+2. Android asks once to allow installs from your browser — allow it.
+3. Tap Install, then Open.
+4. Keep the phone on the same Wi-Fi as the computers.
+
+INSTALL — IPHONE / IPAD (no app needed)
+---------------------------------------
+1. On a computer, open Flow → Connect a device → show the "Web browser" QR.
+2. Scan with the iPhone camera → Flow opens in Safari, already paired.
+   iOS limits apply: no auto-discovery, transfers need Safari open.
+
+EVERY WARNING AND EXACTLY WHAT TO CLICK
+---------------------------------------
+WINDOWS — blue "Windows protected your PC" box (SmartScreen):
+  Click "More info" → "Run anyway". One-time; never appears again.
+  (Work/school PC managed by IT? They may block it — ask admin.)
+
+WINDOWS — browser says "download blocked" or "uncommon download":
+  Choose "Keep" / "Download anyway". It is unsigned, not harmful.
+
+WINDOWS — firewall prompt "allow Flow to communicate":
+  Tick "Private networks" → Allow. Required for device discovery.
+
+MAC — "Flow can't be opened because it is from an unidentified developer":
+  Do NOT just click OK and retry. Instead:
+  Finder → Applications → right-click Flow → Open → Open.
+  Done once, then it opens normally forever. Same fix for Apple silicon and Intel.
+
+MAC — "Flow is damaged and can't be opened":
+  Same fix — right-click in Applications → Open → Open.
+  (It's not damaged; the app just isn't notarized yet.)
+  If still blocked: System Settings → Privacy & Security → "Open Anyway".
+
+ANDROID — Play Protect warns "unsafe app":
+  Tap "More details" → "Install anyway". The APK is signed by the
+  Flow release key; it is just not distributed via the Play Store.
+  Only install the APK from the official site/release page.
+
+ANDROID — "install blocked, installs from unknown sources":
+  Settings → allow your browser to install apps → retry.
+
+HOW TO USE (after install on both devices)
+------------------------------------------
+1. Put both devices on the same Wi-Fi.
+2. They appear automatically — on computers, in the menu-bar/tray menu
+   under "Nearby devices"; on Android, under Nearby.
+3. Click a device to pair → the other side approves → connected.
+   You never need to open the main window.
+4. Then: send files/folders/text from the tray "Send to" menu,
+   Windows right-click "Send to → Flow", Finder "Open With → Flow",
+   or Android's share sheet. Clipboard syncs by default.
+5. Incoming files notify — click the notification to accept.
+
+UPDATES
+-------
+Windows updates itself in the background (tray → "Check for updates…").
+Mac shows a notification linking to the download — install manually.
+Keep both devices on the same version.
+
+HONEST LIMITS
+-------------
+- Unsigned builds: the warnings above appear once per install. Normal.
+- Android clipboard sync only while Flow isn't force-killed.
+- iPhone/iPad: Safari only, no native app yet.
+- Windows extended display: needs a real monitor or third-party
+  virtual-display driver — Flow doesn't install one.
