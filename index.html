@@ -62,7 +62,7 @@
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
         "url": "https://platiniumtermite.github.io/",
         "downloadUrl": "https://github.com/PlatiniumTermite/flow-downloads/releases",
-        "softwareVersion": "0.6.10",
+        "softwareVersion": "0.6.14",
         "featureList": "AirDrop-style file sharing, universal clipboard sync, extended display to a second computer, bidirectional keyboard and mouse link, screen sharing with approval, resumable transfers, menu-bar and system-tray agent",
         "keywords": "airdrop for windows, apple continuity for windows, share files mac windows android, universal clipboard windows mac, extended display second computer, universal control alternative"
       }
@@ -1783,7 +1783,7 @@
       <div class="nav-in">
         <div class="brand"><img src="Flow.png" alt="Flow logo" />Flow</div>
         <div class="nav-right">
-          <span class="badge">v0.6.10 — free download</span>
+          <span class="badge">v0.6.14 — free download</span>
           <a class="nav-link" href="#install">Install guide</a>
           <a
             class="nav-link"
@@ -2841,14 +2841,14 @@
             throw new Error("no matching assets");
           })
           .catch(function () {
-            // Fallback: pinned to the 0.6.10 release if the API is unreachable.
+            // Fallback: pinned to the 0.6.14 release if the API is unreachable.
             var base =
               "https://github.com/" +
               REPO +
-              "/releases/download/v0.6.10/";
+              "/releases/download/v0.6.14/";
             var os = platform();
-            var winFile = "Flow-0.6.10-Windows-x64-Setup.exe";
-            var macFile = "Flow-0.6.10-Mac-arm64.dmg";
+            var winFile = "Flow-0.6.14-Windows-x64-Setup.exe";
+            var macFile = "Flow-0.6.14-Mac-arm64.dmg";
             var apkFile = "Flow-0.6.9-Android.apk";
             var file =
               os === "win" ? winFile : os === "android" ? apkFile : macFile;
@@ -2873,7 +2873,7 @@
               os: os,
               win: base + winFile,
               mac: base + macFile,
-              macIntel: base + "Flow-0.6.10-Mac-x64.dmg",
+              macIntel: base + "Flow-0.6.14-Mac-x64.dmg",
               apk: base + apkFile,
             };
             if (os === "ios") {
@@ -2888,11 +2888,11 @@
               '<a href="https://github.com/' +
               REPO +
               '/releases">See all downloads</a>';
-            document.getElementById("ver").textContent = "v0.6.10";
+            document.getElementById("ver").textContent = "v0.6.14";
             var foot = {
               "win-link": base + winFile,
               "mac-link": base + macFile,
-              "mac-intel-link": base + "Flow-0.6.10-Mac-x64.dmg",
+              "mac-intel-link": base + "Flow-0.6.14-Mac-x64.dmg",
               "apk-link": base + apkFile,
               "sums-link": base + "SHA256SUMS.txt",
             };
@@ -2932,7 +2932,7 @@
         }
 
         var SUMS =
-          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.10/SHA256SUMS.txt";
+          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.14/SHA256SUMS.txt";
 
         function scrollBottom() {
           log.scrollTop = log.scrollHeight;
