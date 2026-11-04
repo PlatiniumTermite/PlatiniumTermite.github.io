@@ -1951,7 +1951,7 @@
 
         <div class="dl-zone reveal in" style="--d: 0.32s">
           <div class="dl-row">
-            <a id="dl" class="dl-btn" href="#downloads" role="button">
+            <a id="dl" class="dl-btn" href="/download/" role="button">
               <svg
                 width="26"
                 height="26"
@@ -1970,7 +1970,7 @@
               <span class="meta">
                 <span id="dl-label">Download Flow</span>
                 <small id="dl-sub"
-                  >Finding latest release
+                  >Choose your device
                   <span class="dots"><b></b><b></b><b></b></span
                 ></small>
               </span>
@@ -2565,8 +2565,8 @@
           >
         </span>
         <span class="links">
-          <a id="win-link" href="#downloads" class="hidden">Windows .exe</a>
-          <a id="mac-link" href="#downloads" class="hidden">Mac .dmg</a>
+          <a id="win-link" href="https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.16/Flow-0.6.16-Windows-x64-Setup.exe">Windows .exe</a>
+          <a id="mac-link" href="https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.15/Flow-0.6.15-Mac-arm64.dmg">Mac .dmg</a>
           <a id="mac-intel-link" href="#downloads" class="hidden"
             >Intel Mac .dmg</a
           >
@@ -2830,8 +2830,11 @@
           return true;
         }
 
-        fetch(API)
+        var releaseRequest = new AbortController();
+        var releaseTimeout = setTimeout(function () { releaseRequest.abort(); }, 6000);
+        fetch(API, { signal: releaseRequest.signal })
           .then(function (r) {
+            clearTimeout(releaseTimeout);
             return r.ok ? r.json() : Promise.reject(r.status);
           })
           .then(function (releases) {
@@ -2853,6 +2856,7 @@
             throw new Error("no matching assets");
           })
           .catch(function () {
+            clearTimeout(releaseTimeout);
             // Pinned per-platform downloads if the API is unreachable.
             var base =
               "https://github.com/" +
