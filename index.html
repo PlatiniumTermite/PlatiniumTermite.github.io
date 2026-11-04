@@ -1783,7 +1783,7 @@
       <div class="nav-in">
         <div class="brand"><img src="Flow.png" alt="Flow logo" />Flow</div>
         <div class="nav-right">
-          <span class="badge">v0.6.15 — free download</span>
+          <span class="badge">Windows v0.6.16 — free download</span>
           <a class="nav-link" href="#install">Install guide</a>
           <a
             class="nav-link"
@@ -2835,24 +2835,37 @@
             return r.ok ? r.json() : Promise.reject(r.status);
           })
           .then(function (releases) {
+            // Platform releases can ship independently. Keep the newest stable
+            // asset for each platform instead of dropping Mac on Windows updates.
+            var chosen = {}, newest = null;
             for (var i = 0; i < releases.length; i++) {
-              if (apply(releases[i])) return;
+              if (releases[i].draft || releases[i].prerelease) continue;
+              var found = pick(releases[i].assets || []);
+              if (!newest && (found.win || found.mac)) newest = releases[i];
+              Object.keys(found).forEach(function (key) {
+                if (!chosen[key] && found[key]) chosen[key] = found[key];
+              });
             }
+            if (newest && apply({
+              assets: Object.keys(chosen).map(function (key) { return chosen[key]; }),
+              tag_name: newest.tag_name, html_url: newest.html_url
+            })) return;
             throw new Error("no matching assets");
           })
           .catch(function () {
-            // Fallback: pinned to the 0.6.15 release if the API is unreachable.
+            // Pinned per-platform downloads if the API is unreachable.
             var base =
               "https://github.com/" +
               REPO +
               "/releases/download/v0.6.15/";
             var os = platform();
-            var winFile = "Flow-0.6.15-Windows-x64-Setup.exe";
+            var winFile = "Flow-0.6.16-Windows-x64-Setup.exe";
+            var winURL = "https://github.com/" + REPO + "/releases/download/v0.6.16/" + winFile;
             var macFile = "Flow-0.6.15-Mac-arm64.dmg";
             var apkFile = "Flow-0.6.9-Android.apk";
             var file =
               os === "win" ? winFile : os === "android" ? apkFile : macFile;
-            dl.href = base + file;
+            dl.href = os === "win" ? winURL : base + file;
             dlLabel.textContent =
               os === "win"
                 ? "Download for Windows"
@@ -2861,17 +2874,17 @@
                   : "Download for Mac";
             dlSub.textContent = file;
             var altFile = os === "win" ? macFile : winFile;
-            dlAlt.href = base + altFile;
+            dlAlt.href = os === "win" ? base + altFile : winURL;
             dlAltLabel.textContent =
               os === "win" ? "Download for Mac" : "Download for Windows";
             dlAltSub.textContent = altFile;
             altIco.innerHTML = os === "win" ? MAC_ICO : WIN_ICO;
             dlAlt.classList.remove("hidden-alt");
             window.__flowDl = {
-              url: base + file,
+              url: os === "win" ? winURL : base + file,
               name: file,
               os: os,
-              win: base + winFile,
+              win: winURL,
               mac: base + macFile,
               macIntel: base + "Flow-0.6.15-Mac-x64.dmg",
               apk: base + apkFile,
@@ -2888,9 +2901,9 @@
               '<a href="https://github.com/' +
               REPO +
               '/releases">See all downloads</a>';
-            document.getElementById("ver").textContent = "v0.6.15";
+            document.getElementById("ver").textContent = "Windows v0.6.16 · Mac v0.6.15";
             var foot = {
-              "win-link": base + winFile,
+              "win-link": winURL,
               "mac-link": base + macFile,
               "mac-intel-link": base + "Flow-0.6.15-Mac-x64.dmg",
               "apk-link": base + apkFile,
