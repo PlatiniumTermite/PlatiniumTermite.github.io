@@ -59,11 +59,11 @@
     </header>
     <main class="wrap">
       <div class="page-hero">
-        <p class="eyebrow">Download · Windows v0.6.17 · Mac v0.6.15</p>
+        <p class="eyebrow">Download · Windows &amp; Mac v0.6.18</p>
         <h1>Get Flow for your devices.</h1>
         <p class="lede">
           Free, no accounts, no sign-up. Install on the devices you want to
-          connect — the pair happens on your own Wi-Fi, not in a cloud.
+          connect. Flow discovers nearby computers automatically and guides you through permissions. Approve the first connection; saved devices reconnect when reachable.
         </p>
       </div>
 
@@ -72,19 +72,19 @@
         <div class="dl-row">
           <a
             class="dl"
-            href="https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.17/Flow-0.6.17-Windows-x64-Setup.exe"
+            href="https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.18/Flow-0.6.18-Windows-x64-Setup.exe"
           >
             <b>Windows</b><small>x64 installer · .exe</small>
           </a>
           <a
             class="dl"
-            href="https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.15/Flow-0.6.15-Mac-arm64.dmg"
+            href="https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.18/Flow-0.6.18-Mac-arm64.dmg"
           >
             <b>Mac — Apple silicon</b><small>M1/M2/M3/M4 · .dmg</small>
           </a>
           <a
             class="dl"
-            href="https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.15/Flow-0.6.15-Mac-x64.dmg"
+            href="https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.18/Flow-0.6.18-Mac-x64.dmg"
           >
             <b>Mac — Intel</b><small>x64 · .dmg</small>
           </a>
@@ -104,7 +104,7 @@
         <p>
           Older versions, release notes and
           <a
-            href="https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.17/SHA256SUMS-0.6.17.txt"
+            href="https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.18/SHA256SUMS.txt"
             >SHA-256 checksums</a
           >
           live on the
@@ -115,7 +115,7 @@
       </section>
 
       <section>
-        <h2>Install — and the one warning you'll see</h2>
+        <h2>Install and complete device setup</h2>
         <div class="steps">
           <div class="step">
             <div class="n"></div>
@@ -131,12 +131,11 @@
           <div class="step">
             <div class="n"></div>
             <div>
-              <h3>Get past the "unknown developer" warning</h3>
+              <h3>Review system access</h3>
               <p>
-                Flow is an unsigned early-alpha build, so every OS shows its
-                standard caution once. Windows: <code>More info → Run anyway</code>.
-                Mac: right-click Flow → <code>Open</code> → <code>Open</code>.
-                Android: <code>More details → Install anyway</code>.
+                Flow opens Device setup after launch. Allow the permissions for
+                the features you want. Desktop builds lack publisher signing/notarization,
+                so OS warnings or blocks may remain; verify the release checksums.
               </p>
             </div>
           </div>
@@ -156,7 +155,7 @@
             <div>
               <h3>Join the same Wi-Fi and pair</h3>
               <p>
-                Devices on the same network find each other automatically.
+                Devices appear automatically when the network allows local discovery.
                 Tap <code>Connect</code> on one side, <code>Allow</code> on the
                 other — done. See
                 <a href="/how-it-works/">how pairing works</a>.
@@ -165,9 +164,9 @@
           </div>
         </div>
         <div class="warn">
-          No Wi-Fi router between your devices? Turn on a phone hotspot and
-          join both — discovery works identically. Different networks entirely?
-          Invitation links or a self-hosted relay bridge them — details in
+          College Wi-Fi can block nearby connections. The space host can try
+          Connect a device → Internet invitation. This depends on the public service
+          being reachable; screen video still needs a WebRTC path. Details in
           <a href="/help/">Help</a>.
         </div>
       </section>
