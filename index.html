@@ -62,7 +62,7 @@
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
         "url": "https://platiniumtermite.github.io/",
         "downloadUrl": "https://github.com/PlatiniumTermite/flow-downloads/releases",
-        "softwareVersion": "0.6.15",
+        "softwareVersion": "0.6.17",
         "featureList": "AirDrop-style file sharing, universal clipboard sync, extended display to a second computer, bidirectional keyboard and mouse link, screen sharing with approval, resumable transfers, menu-bar and system-tray agent",
         "keywords": "airdrop for windows, apple continuity for windows, share files mac windows android, universal clipboard windows mac, extended display second computer, universal control alternative"
       }
@@ -1783,7 +1783,7 @@
       <div class="nav-in">
         <div class="brand"><img src="Flow.png" alt="Flow logo" />Flow</div>
         <div class="nav-right">
-          <span class="badge">Windows v0.6.16 — free download</span>
+          <span class="badge">Windows v0.6.17 — free download</span>
           <a class="nav-link" href="#install">Install guide</a>
           <a
             class="nav-link"
@@ -2565,7 +2565,7 @@
           >
         </span>
         <span class="links">
-          <a id="win-link" href="https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.16/Flow-0.6.16-Windows-x64-Setup.exe">Windows .exe</a>
+          <a id="win-link" href="https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.17/Flow-0.6.17-Windows-x64-Setup.exe">Windows .exe</a>
           <a id="mac-link" href="https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.15/Flow-0.6.15-Mac-arm64.dmg">Mac .dmg</a>
           <a id="mac-intel-link" href="#downloads" class="hidden"
             >Intel Mac .dmg</a
@@ -2863,8 +2863,8 @@
               REPO +
               "/releases/download/v0.6.15/";
             var os = platform();
-            var winFile = "Flow-0.6.16-Windows-x64-Setup.exe";
-            var winURL = "https://github.com/" + REPO + "/releases/download/v0.6.16/" + winFile;
+            var winFile = "Flow-0.6.17-Windows-x64-Setup.exe";
+            var winURL = "https://github.com/" + REPO + "/releases/download/v0.6.17/" + winFile;
             var macFile = "Flow-0.6.15-Mac-arm64.dmg";
             var apkFile = "Flow-0.6.9-Android.apk";
             var file =
@@ -2905,13 +2905,16 @@
               '<a href="https://github.com/' +
               REPO +
               '/releases">See all downloads</a>';
-            document.getElementById("ver").textContent = "Windows v0.6.16 · Mac v0.6.15";
+            document.getElementById("ver").textContent = "Windows v0.6.17 · Mac v0.6.15";
             var foot = {
               "win-link": winURL,
               "mac-link": base + macFile,
               "mac-intel-link": base + "Flow-0.6.15-Mac-x64.dmg",
               "apk-link": base + apkFile,
-              "sums-link": base + "SHA256SUMS.txt",
+              "sums-link":
+                "https://github.com/" +
+                REPO +
+                "/releases/download/v0.6.17/SHA256SUMS-0.6.17.txt",
             };
             for (var fid in foot) {
               var el = document.getElementById(fid);
@@ -2949,7 +2952,7 @@
         }
 
         var SUMS =
-          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.15/SHA256SUMS.txt";
+          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.17/SHA256SUMS-0.6.17.txt";
 
         function scrollBottom() {
           log.scrollTop = log.scrollHeight;
