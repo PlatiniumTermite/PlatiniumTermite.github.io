@@ -1680,7 +1680,7 @@
       <div class="nav-in">
         <div class="brand"><img src="Flow.png" alt="Flow logo" />Flow</div>
         <div class="nav-right">
-          <span class="badge">Windows v0.6.19 — free download</span>
+          <span class="badge">Windows v0.6.20 — free download</span>
           <a class="nav-link" href="#install">Install guide</a>
           <a
             class="nav-link"
@@ -2660,15 +2660,15 @@
             var base =
               "https://github.com/" +
               REPO +
-              "/releases/download/v0.6.19/";
+              "/releases/download/v0.6.20/";
             var os = platform();
-            var winFile = "Flow-0.6.19-Windows-x64-Setup.exe";
+            var winFile = "Flow-0.6.20-Windows-x64-Setup.exe";
             var winURL =
               "https://github.com/" +
               REPO +
-              "/releases/download/v0.6.19/" +
+              "/releases/download/v0.6.20/" +
               winFile;
-            var macFile = "Flow-0.6.19-Mac-arm64.dmg";
+            var macFile = "Flow-0.6.20-Mac-arm64.dmg";
             var apkFile = "Flow-0.6.9-Android.apk";
             var apkURL = "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.15/" + apkFile;
             var file =
@@ -2694,7 +2694,7 @@
               os: os,
               win: winURL,
               mac: base + macFile,
-              macIntel: base + "Flow-0.6.19-Mac-x64.dmg",
+              macIntel: base + "Flow-0.6.20-Mac-x64.dmg",
               apk: apkURL,
             };
             if (os === "ios") {
@@ -2710,16 +2710,16 @@
               REPO +
               '/releases">See all downloads</a>';
             document.getElementById("ver").textContent =
-              "Windows v0.6.19 · Mac v0.6.19";
+              "Windows v0.6.20 · Mac v0.6.20";
             var foot = {
               "win-link": winURL,
               "mac-link": base + macFile,
-              "mac-intel-link": base + "Flow-0.6.19-Mac-x64.dmg",
+              "mac-intel-link": base + "Flow-0.6.20-Mac-x64.dmg",
               "apk-link": apkURL,
               "sums-link":
                 "https://github.com/" +
                 REPO +
-                "/releases/download/v0.6.19/SHA256SUMS.txt",
+                "/releases/download/v0.6.20/SHA256SUMS.txt",
             };
             for (var fid in foot) {
               var el = document.getElementById(fid);
@@ -2757,7 +2757,7 @@
         }
 
         var SUMS =
-          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.19/SHA256SUMS.txt";
+          "https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.20/SHA256SUMS.txt";
 
         function scrollBottom() {
           log.scrollTop = log.scrollHeight;
