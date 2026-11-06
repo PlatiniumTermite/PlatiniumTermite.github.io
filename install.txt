@@ -5,15 +5,15 @@ when the network allows discovery, pair with approval, and share files, folders,
 screens, and keyboard/mouse. Works between Windows, Mac and Android.
 iPhone/iPad join through Safari — no install needed.
 
-DOWNLOADS (desktop release v0.6.18)
+DOWNLOADS (desktop release v0.6.19)
 ----------------------------------
 Website (auto-picks your OS, always latest): https://platiniumtermite.github.io/
 Latest release page:                         https://github.com/PlatiniumTermite/flow-downloads/releases/latest
-Windows x64 installer: https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.18/Flow-0.6.18-Windows-x64-Setup.exe
-Mac Apple silicon:    https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.18/Flow-0.6.18-Mac-arm64.dmg
-Mac Intel:            https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.18/Flow-0.6.18-Mac-x64.dmg
+Windows x64 installer: https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.19/Flow-0.6.19-Windows-x64-Setup.exe
+Mac Apple silicon:    https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.19/Flow-0.6.19-Mac-arm64.dmg
+Mac Intel:            https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.19/Flow-0.6.19-Mac-x64.dmg
 Android APK:          https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.15/Flow-0.6.9-Android.apk
-Checksums:            https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.18/SHA256SUMS.txt
+Checksums:            https://github.com/PlatiniumTermite/flow-downloads/releases/download/v0.6.19/SHA256SUMS.txt
 
 INSTALL — WINDOWS
 -----------------
